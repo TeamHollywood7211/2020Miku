@@ -31,24 +31,33 @@ public class Chassis extends SubsystemBase {
   public DifferentialDrive diffDrive;
 
   public Chassis() {
+    //Define the left side of the robot and group the motors together.
     leftFront = new CANSparkMax(0, MotorType.kBrushless);
     leftMiddle = new CANSparkMax(1, MotorType.kBrushless);
     leftBack = new CANSparkMax(2, MotorType.kBrushless);
     final SpeedControllerGroup leftMotors = new SpeedControllerGroup(leftFront, leftMiddle, leftBack);
 
+    //Define the right side of the robot and group the motors together.
     rightFront = new CANSparkMax(10, MotorType.kBrushless);
     rightMiddle = new CANSparkMax(11, MotorType.kBrushless);
     rightBack = new CANSparkMax(12, MotorType.kBrushless);
     final SpeedControllerGroup rightMotors = new SpeedControllerGroup(rightFront, rightMiddle, rightBack);
 
+    //Group the SpeedControllerGroups into one Differential Drive system.
     diffDrive = new DifferentialDrive(leftMotors, rightMotors);
   }
 
   public void driveByJoystick() {
+    //Read the opposite value returned from the driver left y stick.
     double moveSpeed = -RobotContainer.driverJoystick.getRawAxis(1); //Left Y
+
+    //read the value returned from the driver right x stick.
     double turnSpeed = RobotContainer.driverJoystick.getRawAxis(4); //Right X
+
+    //Increase the values at a increasing rate.
     boolean squaredInputs = true;
 
+    //use the actual FRC provided method with easier access in the defined method.
     this.driveArcade(moveSpeed, turnSpeed, squaredInputs);
     // this.driveTank(moveSpeed, turnSpeed, squaredInputs);
   }

@@ -30,14 +30,16 @@ public class RunHarvester extends CommandBase {
   // Called every time the scheduler runs while the command is scheduled.
   @Override
   public void execute() {
-    RobotContainer.m_harvester.harvesterArm.set(true);
+    //Tell the code the harvester is extending its arm and then extend it.
     armExtended = true;
+    RobotContainer.m_harvester.harvesterArm.set(armExtended);
     harvesterMotor();
 
   }
   public void harvesterMotor(){
+    //Check if the arm is extended and turn on the motors if it is.
     if (armExtended == true){
-      RobotContainer.m_harvester.harvesterMotor.set(1.0);
+      RobotContainer.m_harvester.harvesterMotor.set(1);
     }
     else {
       RobotContainer.m_harvester.harvesterMotor.set(0);
