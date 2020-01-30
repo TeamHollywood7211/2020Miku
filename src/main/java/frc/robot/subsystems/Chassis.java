@@ -6,7 +6,6 @@
 /*----------------------------------------------------------------------------*/
 
 package frc.robot.subsystems;
-import frc.robot.commands.DriveChassis;
 
 import edu.wpi.first.wpilibj.SpeedControllerGroup;
 import edu.wpi.first.wpilibj2.command.SubsystemBase;
@@ -32,9 +31,9 @@ public class Chassis extends SubsystemBase {
 
   public Chassis() {
     //Define the left side of the robot and group the motors together.
-    leftFront = new CANSparkMax(0, MotorType.kBrushless);
-    leftMiddle = new CANSparkMax(1, MotorType.kBrushless);
-    leftBack = new CANSparkMax(2, MotorType.kBrushless);
+    leftFront = new CANSparkMax(1, MotorType.kBrushless);
+    leftMiddle = new CANSparkMax(2, MotorType.kBrushless);
+    leftBack = new CANSparkMax(3, MotorType.kBrushless);
     final SpeedControllerGroup leftMotors = new SpeedControllerGroup(leftFront, leftMiddle, leftBack);
 
     //Define the right side of the robot and group the motors together.
@@ -47,7 +46,7 @@ public class Chassis extends SubsystemBase {
     diffDrive = new DifferentialDrive(leftMotors, rightMotors);
   }
 
-  public void driveByJoystick() {
+  public void DriveByJoystick() {
     //Read the opposite value returned from the driver left y stick.
     double moveSpeed = -RobotContainer.driverJoystick.getRawAxis(1); //Left Y
 
@@ -69,6 +68,6 @@ public class Chassis extends SubsystemBase {
   public void periodic() {
     // Set the default command for a subsystem here.
     // setDefaultCommand(new MySpecialCommand());
-    setDefaultCommand(new DriveChassis());
+  
   }
 }

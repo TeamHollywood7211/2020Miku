@@ -9,14 +9,14 @@ package frc.robot.commands;
 
 import edu.wpi.first.wpilibj2.command.CommandBase;
 import frc.robot.RobotContainer;
-
-public class DriveChassis extends CommandBase {
+public class RunShooter extends CommandBase {
   /**
-   * Creates a new DriveChassis.
+   * Creates a new RunShooter.
    */
-  public DriveChassis() {
+  private boolean cellReady = true;
+  public RunShooter() {
     // Use addRequirements() here to declare subsystem dependencies.
-    addRequirements(RobotContainer.m_chassis);
+    addRequirements(RobotContainer.m_shooter);
   }
 
   // Called when the command is initially scheduled.
@@ -27,14 +27,17 @@ public class DriveChassis extends CommandBase {
   // Called every time the scheduler runs while the command is scheduled.
   @Override
   public void execute() {
-    //Use our arcade drive command
-    RobotContainer.m_chassis.DriveByJoystick();
+    if (RobotContainer.operatorJoystick.getRawAxis(3) >= 0.5 && cellReady == true){
+      RobotContainer.m_conveyor.frontConveyor.set(1);
+      }
+      else{
+        RobotContainer.m_shooter.shootingMotor.set(0);
+      }
   }
 
   // Called once the command ends or is interrupted.
   @Override
   public void end(boolean interrupted) {
-    RobotContainer.m_chassis.driveArcade(0,0,false);
   }
 
   // Returns true when the command should end.

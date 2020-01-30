@@ -25,15 +25,24 @@ import edu.wpi.first.wpilibj2.command.button.JoystickButton;
  * commands, and button mappings) should be declared here.
  */
 public class RobotContainer {
-  // The robot's subsystems and commands are defined here...
+  // The robot's subsystems
   public static Chassis m_chassis; 
-  public DriveChassis m_driveChassis;
   public static Harvester m_harvester;
+  public static Conveyor m_conveyor;
+  public static Shooter m_shooter;
+  public static Lift m_lift;
+  public static Turret m_turret;
 
-    public final static Joystick driverJoystick = new Joystick(0);
+  //The robot's commands
+  public DriveChassis m_driveChassis;
+  public static RunConveyor m_runConveyor;
+  public static RunShooter m_runShooter;
+  public static TurnTurret m_turnTurret;
 
-    public final static Joystick operatorJoystick = new Joystick(1);
-    public final static JoystickButton harvesterButton = new JoystickButton(operatorJoystick, 1);
+  public final static Joystick driverJoystick = new Joystick(0);
+
+  public final static Joystick operatorJoystick = new Joystick(1);
+  public final static JoystickButton harvesterButton = new JoystickButton(operatorJoystick, 1);
    
 
 
@@ -51,8 +60,13 @@ public class RobotContainer {
   public RobotContainer() {
     // Configure the button bindings
 
-  m_chassis = new Chassis();
-  m_driveChassis = new DriveChassis();
+    m_chassis = new Chassis();
+    m_driveChassis = new DriveChassis();
+    m_conveyor = new Conveyor();
+    m_shooter = new Shooter();
+    m_lift = new Lift();
+    m_turret = new Turret();
+
     configureButtonBindings();
   }
   
@@ -68,15 +82,5 @@ public class RobotContainer {
     harvesterButton.whileHeld(new RunHarvester());
 
   }
-
-
-  /**
-   * Use this to pass the autonomous command to the main {@link Robot} class.
-   *
-   * @return the command to run in autonomous
-   */
-
-    // An ExampleCommand will run in autonomous
-    
-  
 }
+

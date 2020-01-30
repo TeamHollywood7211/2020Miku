@@ -97,6 +97,17 @@ public class Robot extends TimedRobot {
    */
   @Override
   public void teleopPeriodic() {
+    //Run the robot conveyor
+    RobotContainer.m_runConveyor.execute();
+
+    //Run the shooting mechanism
+    RobotContainer.m_runShooter.execute();
+
+    //Turn the top turret
+    RobotContainer.m_turnTurret.execute();
+
+    //Post the values retrieved from the limelight.
+    RobotContainer.m_turret.returnCameraValues();
   }
 
   @Override
