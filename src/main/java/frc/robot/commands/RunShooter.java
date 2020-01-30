@@ -16,7 +16,7 @@ public class RunShooter extends CommandBase {
   private boolean cellReady = true;
   public RunShooter() {
     // Use addRequirements() here to declare subsystem dependencies.
-    addRequirements(RobotContainer.m_shooter);
+    //addRequirements(RobotContainer.m_shooter);
   }
 
   // Called when the command is initially scheduled.

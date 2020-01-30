@@ -24,8 +24,8 @@ public class Turret extends SubsystemBase {
    */
   public CANSparkMax turretMotor;
 
-  NetworkTable table = NetworkTableInstance.getDefault().getTable("limelight");
-NetworkTableEntry tx = table.getEntry("tx");
+ NetworkTable table = NetworkTableInstance.getDefault().getTable("limelight");
+ NetworkTableEntry tx = table.getEntry("tx");
 NetworkTableEntry ty = table.getEntry("ty");
 NetworkTableEntry ta = table.getEntry("ta");
 

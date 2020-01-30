@@ -19,7 +19,7 @@ public class RunHarvester extends CommandBase {
 
   public RunHarvester() {
     // Use addRequirements() here to declare subsystem dependencies.
-    addRequirements(RobotContainer.m_harvester);
+    //addRequirements(RobotContainer.m_harvester);
   }
 
   // Called when the command is initially scheduled.

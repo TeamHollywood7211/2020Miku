@@ -107,7 +107,7 @@ public class Robot extends TimedRobot {
     RobotContainer.m_turnTurret.execute();
 
     //Post the values retrieved from the limelight.
-    RobotContainer.m_turret.returnCameraValues();
+    //RobotContainer.m_turret.returnCameraValues();
   }
 
   @Override

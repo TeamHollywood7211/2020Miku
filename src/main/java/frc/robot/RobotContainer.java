@@ -26,12 +26,12 @@ import edu.wpi.first.wpilibj2.command.button.JoystickButton;
  */
 public class RobotContainer {
   // The robot's subsystems
-  public static Chassis m_chassis; 
-  public static Harvester m_harvester;
-  public static Conveyor m_conveyor;
-  public static Shooter m_shooter;
-  public static Lift m_lift;
-  public static Turret m_turret;
+  public static Chassis m_chassis = new Chassis(); 
+  public static Harvester m_harvester = new Harvester();
+  public static Conveyor m_conveyor = new Conveyor();
+  public static Shooter m_shooter = new Shooter();
+  public static Lift m_lift = new Lift();
+  public static Turret m_turret = new Turret();
 
   //The robot's commands
   public DriveChassis m_driveChassis;
@@ -59,14 +59,6 @@ public class RobotContainer {
    */
   public RobotContainer() {
     // Configure the button bindings
-
-    m_chassis = new Chassis();
-    m_driveChassis = new DriveChassis();
-    m_conveyor = new Conveyor();
-    m_shooter = new Shooter();
-    m_lift = new Lift();
-    m_turret = new Turret();
-
     configureButtonBindings();
   }
   
