@@ -8,9 +8,11 @@
 package frc.robot.subsystems;
 
 import edu.wpi.first.wpilibj2.command.SubsystemBase;
+import frc.robot.RobotContainer;
+import frc.robot.commands.RunShooter;
 
 import com.revrobotics.CANSparkMax;
-//import com.revrobotics.CANSparkMaxLowLevel.MotorType;
+import com.revrobotics.CANSparkMaxLowLevel.MotorType;
 
 public class Shooter extends SubsystemBase {
   /**
@@ -19,11 +21,12 @@ public class Shooter extends SubsystemBase {
   public CANSparkMax shootingMotor;
 
   public Shooter() {
-   // shootingMotor = new CANSparkMax(40, MotorType.kBrushless);
+    shootingMotor = new CANSparkMax(40, MotorType.kBrushless);
   }
 
   @Override
   public void periodic() {
     // This method will be called once per scheduler run
+    setDefaultCommand(new RunShooter(RobotContainer.m_shooter));
   }
 }

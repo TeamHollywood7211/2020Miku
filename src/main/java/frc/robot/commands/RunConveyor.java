@@ -9,6 +9,7 @@ package frc.robot.commands;
 
 import edu.wpi.first.wpilibj2.command.CommandBase;
 import frc.robot.RobotContainer;
+import frc.robot.subsystems.Conveyor;
 
 public class RunConveyor extends CommandBase {
   /**
@@ -16,9 +17,9 @@ public class RunConveyor extends CommandBase {
    */
   private boolean conveyorClear = true;
   private int speed = 1;
-  public RunConveyor() {
+  public RunConveyor(Conveyor conveyor) {
     // Use addRequirements() here to declare subsystem dependencies.
-    addRequirements(RobotContainer.m_conveyor);
+    addRequirements(conveyor);
   }
 
   // Called when the command is initially scheduled.
@@ -31,7 +32,7 @@ public class RunConveyor extends CommandBase {
   public void execute() {
     if (RobotContainer.operatorJoystick.getRawAxis(2) >= 0.5 && conveyorClear == true){
     RobotContainer.m_conveyor.frontConveyor.set(speed);
-    RobotContainer.m_conveyor.backConveyor.set(-speed);
+    RobotContainer.m_conveyor.backConveyor.set(speed);
     }
     else{
       RobotContainer.m_conveyor.frontConveyor.set(0);

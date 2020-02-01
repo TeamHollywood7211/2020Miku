@@ -35,8 +35,7 @@ public class RobotContainer {
 
   //The robot's commands
   public DriveChassis m_driveChassis;
-  public static RunConveyor m_runConveyor;
-  public static RunShooter m_runShooter;
+
   public static TurnTurret m_turnTurret;
 
   public final static Joystick driverJoystick = new Joystick(0);
@@ -51,7 +50,7 @@ public class RobotContainer {
     // Drive with arcade drive.
     // That means that the Y axis drives forward
     // and backward, and the X turns left and right.
-    m_driveChassis.execute();
+    new DriveChassis(m_chassis);
   }
 
   /**
@@ -71,7 +70,7 @@ public class RobotContainer {
    * {@link edu.wpi.first.wpilibj2.command.button.JoystickButton}.
    */
   private void configureButtonBindings() {
-    harvesterButton.whileHeld(new RunHarvester());
+    harvesterButton.whileHeld(new RunHarvester(m_harvester));
 
   }
 }

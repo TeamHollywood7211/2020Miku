@@ -9,6 +9,7 @@ package frc.robot.subsystems;
 
 import edu.wpi.first.wpilibj2.command.SubsystemBase;
 import frc.robot.RobotContainer;
+import frc.robot.commands.TurnTurret;
 
 import com.revrobotics.CANSparkMax;
 import com.revrobotics.CANSparkMaxLowLevel.MotorType;
@@ -41,11 +42,12 @@ double area = ta.getDouble(0.0);
 
   public void DriveTurret(){
     double turnSpeed = RobotContainer.operatorJoystick.getRawAxis(4);
-    turretMotor.set(turnSpeed);
+    turretMotor.set(-turnSpeed);
   }
   @Override
   public void periodic() {
     // This method will be called once per scheduler run
+    setDefaultCommand(new TurnTurret(RobotContainer.m_turret));
   }
   public void returnCameraValues(){
 //post to smart dashboard periodically

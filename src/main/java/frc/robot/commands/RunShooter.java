@@ -9,14 +9,17 @@ package frc.robot.commands;
 
 import edu.wpi.first.wpilibj2.command.CommandBase;
 import frc.robot.RobotContainer;
+import frc.robot.subsystems.Shooter;
+
 public class RunShooter extends CommandBase {
   /**
    * Creates a new RunShooter.
    */
   private boolean cellReady = true;
-  public RunShooter() {
+  public RunShooter(Shooter shooter) {
     // Use addRequirements() here to declare subsystem dependencies.
-    //addRequirements(RobotContainer.m_shooter);
+    addRequirements(shooter);
+
   }
 
   // Called when the command is initially scheduled.
@@ -28,7 +31,7 @@ public class RunShooter extends CommandBase {
   @Override
   public void execute() {
     if (RobotContainer.operatorJoystick.getRawAxis(3) >= 0.5 && cellReady == true){
-      RobotContainer.m_conveyor.frontConveyor.set(1);
+      RobotContainer.m_shooter.shootingMotor.set(1);
       }
       else{
         RobotContainer.m_shooter.shootingMotor.set(0);

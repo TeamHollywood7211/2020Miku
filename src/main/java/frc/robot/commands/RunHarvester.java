@@ -7,8 +7,10 @@
 
 package frc.robot.commands;
 
+import edu.wpi.first.wpilibj.DoubleSolenoid;
 import edu.wpi.first.wpilibj2.command.CommandBase;
 import frc.robot.RobotContainer;
+import frc.robot.subsystems.Harvester;
 
 public class RunHarvester extends CommandBase {
   /**
@@ -17,14 +19,16 @@ public class RunHarvester extends CommandBase {
 
   public boolean armExtended = false;
 
-  public RunHarvester() {
+  public RunHarvester(Harvester harvester) {
     // Use addRequirements() here to declare subsystem dependencies.
-    //addRequirements(RobotContainer.m_harvester);
+    addRequirements(harvester);
   }
 
   // Called when the command is initially scheduled.
   @Override
   public void initialize() {
+    armExtended = false;
+    RobotContainer.m_harvester.harvesterArm.set(DoubleSolenoid.Value.kOff);
   }
 
   // Called every time the scheduler runs while the command is scheduled.
@@ -32,7 +36,9 @@ public class RunHarvester extends CommandBase {
   public void execute() {
     //Tell the code the harvester is extending its arm and then extend it.
     armExtended = true;
-    RobotContainer.m_harvester.harvesterArm.set(armExtended);
+    
+    RobotContainer.m_harvester.harvesterArm.set(DoubleSolenoid.Value.kForward);
+
     harvesterMotor();
 
   }
@@ -49,6 +55,8 @@ public class RunHarvester extends CommandBase {
   @Override
   public void end(boolean interrupted) {
     armExtended = false;
+    RobotContainer.m_harvester.harvesterArm.set(DoubleSolenoid.Value.kReverse);
+    harvesterMotor();
   }
 
   // Returns true when the command should end.
