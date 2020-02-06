@@ -8,16 +8,18 @@
 package frc.robot.commands;
 
 import edu.wpi.first.wpilibj2.command.CommandBase;
-import frc.robot.subsystems.Chassis;
 import frc.robot.RobotContainer;
+import frc.robot.subsystems.Conveyor;
 
-public class DriveChassis extends CommandBase {
+public class RunConveyor extends CommandBase {
   /**
-   * Creates a new DriveChassis.
+   * Creates a new RunConveyor.
    */
-  public DriveChassis(Chassis chassis) {
+  private boolean conveyorClear = true;
+  private int speed = 1;
+  public RunConveyor(Conveyor conveyor) {
     // Use addRequirements() here to declare subsystem dependencies.
-    addRequirements(chassis);
+    addRequirements(conveyor);
   }
 
   // Called when the command is initially scheduled.
@@ -28,14 +30,19 @@ public class DriveChassis extends CommandBase {
   // Called every time the scheduler runs while the command is scheduled.
   @Override
   public void execute() {
-    //Use our arcade drive command
-    RobotContainer.m_chassis.DriveByJoystick();
+    if (RobotContainer.operatorJoystick.getRawAxis(2) >= 0.5 && conveyorClear == true){
+    RobotContainer.m_conveyor.frontConveyor.set(speed);
+    RobotContainer.m_conveyor.backConveyor.set(speed);
+    }
+    else{
+      RobotContainer.m_conveyor.frontConveyor.set(0);
+      RobotContainer.m_conveyor.backConveyor.set(0);
+    }
   }
 
   // Called once the command ends or is interrupted.
   @Override
   public void end(boolean interrupted) {
-    RobotContainer.m_chassis.driveTank(0,0,false);
   }
 
   // Returns true when the command should end.

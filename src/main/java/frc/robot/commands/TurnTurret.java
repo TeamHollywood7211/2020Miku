@@ -8,16 +8,16 @@
 package frc.robot.commands;
 
 import edu.wpi.first.wpilibj2.command.CommandBase;
-import frc.robot.subsystems.Chassis;
 import frc.robot.RobotContainer;
+import frc.robot.subsystems.Turret;
 
-public class DriveChassis extends CommandBase {
+public class TurnTurret extends CommandBase {
   /**
-   * Creates a new DriveChassis.
+   * Creates a new TurnTurret.
    */
-  public DriveChassis(Chassis chassis) {
+  public TurnTurret(Turret turret){
     // Use addRequirements() here to declare subsystem dependencies.
-    addRequirements(chassis);
+    addRequirements(turret);
   }
 
   // Called when the command is initially scheduled.
@@ -28,14 +28,12 @@ public class DriveChassis extends CommandBase {
   // Called every time the scheduler runs while the command is scheduled.
   @Override
   public void execute() {
-    //Use our arcade drive command
-    RobotContainer.m_chassis.DriveByJoystick();
+    RobotContainer.m_turret.DriveTurret();
   }
 
   // Called once the command ends or is interrupted.
   @Override
   public void end(boolean interrupted) {
-    RobotContainer.m_chassis.driveTank(0,0,false);
   }
 
   // Returns true when the command should end.

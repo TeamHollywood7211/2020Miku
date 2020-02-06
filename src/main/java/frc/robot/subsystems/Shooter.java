@@ -8,28 +8,25 @@
 package frc.robot.subsystems;
 
 import edu.wpi.first.wpilibj2.command.SubsystemBase;
-import edu.wpi.first.wpilibj.DoubleSolenoid;
+import frc.robot.RobotContainer;
+import frc.robot.commands.RunShooter;
 
 import com.revrobotics.CANSparkMax;
 import com.revrobotics.CANSparkMaxLowLevel.MotorType;
 
-public class Harvester extends SubsystemBase {
+public class Shooter extends SubsystemBase {
   /**
-   * Creates a new Harvester.
+   * Creates a new Shooter.
    */
+  public CANSparkMax shootingMotor;
 
-  public DoubleSolenoid harvesterArm;
-  public CANSparkMax harvesterMotor;
-
-  public Harvester() {
-    harvesterArm = new DoubleSolenoid(0,1);
-    harvesterMotor = new CANSparkMax(20, MotorType.kBrushless);
-
+  public Shooter() {
+    shootingMotor = new CANSparkMax(40, MotorType.kBrushless);
   }
 
   @Override
   public void periodic() {
     // This method will be called once per scheduler run
-    
+    setDefaultCommand(new RunShooter(RobotContainer.m_shooter));
   }
 }

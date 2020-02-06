@@ -8,28 +8,28 @@
 package frc.robot.subsystems;
 
 import edu.wpi.first.wpilibj2.command.SubsystemBase;
-import edu.wpi.first.wpilibj.DoubleSolenoid;
+import frc.robot.RobotContainer;
+import frc.robot.commands.RunConveyor;
 
 import com.revrobotics.CANSparkMax;
 import com.revrobotics.CANSparkMaxLowLevel.MotorType;
 
-public class Harvester extends SubsystemBase {
+public class Conveyor extends SubsystemBase {
   /**
-   * Creates a new Harvester.
+   * Creates a new Conveyor.
    */
+  public CANSparkMax frontConveyor;
+  public CANSparkMax backConveyor;
 
-  public DoubleSolenoid harvesterArm;
-  public CANSparkMax harvesterMotor;
-
-  public Harvester() {
-    harvesterArm = new DoubleSolenoid(0,1);
-    harvesterMotor = new CANSparkMax(20, MotorType.kBrushless);
-
+  public Conveyor() {
+    frontConveyor = new CANSparkMax(30, MotorType.kBrushless);
+    backConveyor = new CANSparkMax(31, MotorType.kBrushless);
   }
 
   @Override
   public void periodic() {
     // This method will be called once per scheduler run
-    
+      //Run the robot conveyor
+     setDefaultCommand(new RunConveyor(RobotContainer.m_conveyor));
   }
 }

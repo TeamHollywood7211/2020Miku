@@ -25,15 +25,23 @@ import edu.wpi.first.wpilibj2.command.button.JoystickButton;
  * commands, and button mappings) should be declared here.
  */
 public class RobotContainer {
-  // The robot's subsystems and commands are defined here...
-  public static Chassis m_chassis; 
+  // The robot's subsystems
+  public static Chassis m_chassis = new Chassis(); 
+  public static Harvester m_harvester = new Harvester();
+  public static Conveyor m_conveyor = new Conveyor();
+  public static Shooter m_shooter = new Shooter();
+  public static Turret m_turret = new Turret();
+
+  //The robot's commands
   public DriveChassis m_driveChassis;
-  public static Harvester m_harvester;
 
-    public final static Joystick driverJoystick = new Joystick(0);
+  public static TurnTurret m_turnTurret;
 
-    public final static Joystick operatorJoystick = new Joystick(1);
-    public final static JoystickButton harvesterButton = new JoystickButton(operatorJoystick, 1);
+  public final static Joystick driverJoystick = new Joystick(0);
+
+  public final static Joystick operatorJoystick = new Joystick(1);
+  public final static JoystickButton harvesterArmButton = new JoystickButton(operatorJoystick, 8);
+  public final static JoystickButton harvesterMotorButton = new JoystickButton(operatorJoystick, 6);
    
 
 
@@ -42,7 +50,7 @@ public class RobotContainer {
     // Drive with arcade drive.
     // That means that the Y axis drives forward
     // and backward, and the X turns left and right.
-    m_driveChassis.execute();
+    new DriveChassis(m_chassis);
   }
 
   /**
@@ -50,9 +58,6 @@ public class RobotContainer {
    */
   public RobotContainer() {
     // Configure the button bindings
-
-  m_chassis = new Chassis();
-  m_driveChassis = new DriveChassis();
     configureButtonBindings();
   }
   
@@ -65,18 +70,8 @@ public class RobotContainer {
    * {@link edu.wpi.first.wpilibj2.command.button.JoystickButton}.
    */
   private void configureButtonBindings() {
-    harvesterButton.whileHeld(new RunHarvester());
-
+    harvesterArmButton.whenPressed(new RunHarvester(m_harvester));
+    harvesterMotorButton.whenPressed(new RunHarvester(m_harvester));
   }
-
-
-  /**
-   * Use this to pass the autonomous command to the main {@link Robot} class.
-   *
-   * @return the command to run in autonomous
-   */
-
-    // An ExampleCommand will run in autonomous
-    
-  
 }
+

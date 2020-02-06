@@ -8,28 +8,17 @@
 package frc.robot.subsystems;
 
 import edu.wpi.first.wpilibj2.command.SubsystemBase;
-import edu.wpi.first.wpilibj.DoubleSolenoid;
 
-import com.revrobotics.CANSparkMax;
-import com.revrobotics.CANSparkMaxLowLevel.MotorType;
-
-public class Harvester extends SubsystemBase {
+public class Lift extends SubsystemBase {
   /**
-   * Creates a new Harvester.
+   * Creates a new Lift.
    */
-
-  public DoubleSolenoid harvesterArm;
-  public CANSparkMax harvesterMotor;
-
-  public Harvester() {
-    harvesterArm = new DoubleSolenoid(0,1);
-    harvesterMotor = new CANSparkMax(20, MotorType.kBrushless);
+  public Lift() {
 
   }
 
   @Override
   public void periodic() {
     // This method will be called once per scheduler run
-    
   }
 }

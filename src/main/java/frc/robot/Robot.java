@@ -13,8 +13,8 @@ import edu.wpi.first.wpilibj2.command.Command;
 import edu.wpi.first.wpilibj2.command.CommandScheduler;
 
 import frc.robot.RobotContainer;
-
-
+import frc.robot.commands.*;
+import frc.robot.LimelightValues;
 
 /**
  * The VM is configured to automatically run this class, and to call the functions corresponding to
@@ -24,6 +24,9 @@ import frc.robot.RobotContainer;
  */
 public class Robot extends TimedRobot {
   private Command m_autonomousCommand;
+  private Command m_runConveyor = new RunConveyor(RobotContainer.m_conveyor);
+  private Command m_runShooter = new RunShooter(RobotContainer.m_shooter);
+  private Command m_turnTurret = new TurnTurret(RobotContainer.m_turret);
 
   /**
    * This function is run when the robot is first started up and should be used
@@ -33,6 +36,7 @@ public class Robot extends TimedRobot {
   public void robotInit() {
     new RobotContainer();
     CameraServer.getInstance().startAutomaticCapture();
+    LimelightValues.PrintLimelightValues();
   }
 
   /**
@@ -90,6 +94,14 @@ public class Robot extends TimedRobot {
     if (m_autonomousCommand != null) {
       m_autonomousCommand.cancel();
     }
+    //Run the robot conveyor
+    m_runConveyor.schedule();
+
+    //Run the shooting mechanism
+    m_runShooter.schedule();
+  
+    //Turn the top turret
+    m_turnTurret.schedule();
   }
 
   /**
@@ -97,6 +109,9 @@ public class Robot extends TimedRobot {
    */
   @Override
   public void teleopPeriodic() {
+
+    //Post the values retrieved from the limelight.
+    //RobotContainer.m_turret.returnCameraValues();
   }
 
   @Override
@@ -111,4 +126,5 @@ public class Robot extends TimedRobot {
   @Override
   public void testPeriodic() {
   }
+
 }
