@@ -27,24 +27,31 @@ public class RunHarvester extends CommandBase {
   // Called when the command is initially scheduled.
   @Override
   public void initialize() {
-    armExtended = false;
-    RobotContainer.m_harvester.harvesterArm.set(DoubleSolenoid.Value.kOff);
+    
   }
 
   // Called every time the scheduler runs while the command is scheduled.
   @Override
   public void execute() {
     //Tell the code the harvester is extending its arm and then extend it.
-    armExtended = true;
     
-    RobotContainer.m_harvester.harvesterArm.set(DoubleSolenoid.Value.kForward);
-
+    harvesterArm();
     harvesterMotor();
 
   }
+  public void harvesterArm(){
+    if (RobotContainer.operatorJoystick.getRawButtonPressed(8) && armExtended == false){
+      RobotContainer.m_harvester.harvesterArm.set(DoubleSolenoid.Value.kForward);
+      armExtended = true;
+    }
+    else if(RobotContainer.operatorJoystick.getRawButtonPressed(8) && armExtended == true){
+      RobotContainer.m_harvester.harvesterArm.set(DoubleSolenoid.Value.kReverse);
+      armExtended = false;
+    }
+  }
   public void harvesterMotor(){
     //Check if the arm is extended and turn on the motors if it is.
-    if (armExtended == true){
+    if (RobotContainer.operatorJoystick.getRawButtonPressed(6)){
       RobotContainer.m_harvester.harvesterMotor.set(1);
     }
     else {
@@ -54,9 +61,8 @@ public class RunHarvester extends CommandBase {
   // Called once the command ends or is interrupted.
   @Override
   public void end(boolean interrupted) {
-    armExtended = false;
-    RobotContainer.m_harvester.harvesterArm.set(DoubleSolenoid.Value.kReverse);
-    harvesterMotor();
+    RobotContainer.m_harvester.harvesterArm.set(DoubleSolenoid.Value.kOff);
+    
   }
 
   // Returns true when the command should end.

@@ -30,7 +30,6 @@ public class RobotContainer {
   public static Harvester m_harvester = new Harvester();
   public static Conveyor m_conveyor = new Conveyor();
   public static Shooter m_shooter = new Shooter();
-  public static Lift m_lift = new Lift();
   public static Turret m_turret = new Turret();
 
   //The robot's commands
@@ -41,7 +40,8 @@ public class RobotContainer {
   public final static Joystick driverJoystick = new Joystick(0);
 
   public final static Joystick operatorJoystick = new Joystick(1);
-  public final static JoystickButton harvesterButton = new JoystickButton(operatorJoystick, 1);
+  public final static JoystickButton harvesterArmButton = new JoystickButton(operatorJoystick, 8);
+  public final static JoystickButton harvesterMotorButton = new JoystickButton(operatorJoystick, 6);
    
 
 
@@ -70,8 +70,8 @@ public class RobotContainer {
    * {@link edu.wpi.first.wpilibj2.command.button.JoystickButton}.
    */
   private void configureButtonBindings() {
-    harvesterButton.whileHeld(new RunHarvester(m_harvester));
-
+    harvesterArmButton.whenPressed(new RunHarvester(m_harvester));
+    harvesterMotorButton.whenPressed(new RunHarvester(m_harvester));
   }
 }
 

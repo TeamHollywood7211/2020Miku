@@ -49,20 +49,23 @@ public class Chassis extends SubsystemBase {
 
   public void DriveByJoystick() {
     //Read the opposite value returned from the driver left y stick.
-    double moveSpeed = -RobotContainer.driverJoystick.getRawAxis(1); //Left Y
+    double leftStick = -RobotContainer.driverJoystick.getRawAxis(1) * 0.5; //Left Y
 
     //read the value returned from the driver right x stick.
-    double turnSpeed = RobotContainer.driverJoystick.getRawAxis(4); //Right X
+    double rightStick = -RobotContainer.driverJoystick.getRawAxis(5) * 0.5; //Right X
 
     //Increase the values at a increasing rate.
     boolean squaredInputs = true;
 
     //use the actual FRC provided method with easier access in the defined method.
-    this.driveArcade(moveSpeed, turnSpeed, squaredInputs);
-    // this.driveTank(moveSpeed, turnSpeed, squaredInputs);
+    //this.driveArcade(moveSpeed, turnSpeed, squaredInputs);
+    this.driveTank(leftStick, rightStick, squaredInputs);
   }
-  public void driveArcade(double moveSpeed, double turnSpeed, boolean squaredInputs) {
-    this.diffDrive.arcadeDrive(moveSpeed, turnSpeed, squaredInputs);
+  public void driveArcade(double leftStick, double rightStick, boolean squaredInputs) {
+    this.diffDrive.arcadeDrive(leftStick, rightStick, squaredInputs);
+  }
+  public void driveTank(double leftStick, double rightStick, boolean squaredInputs) {
+    this.diffDrive.tankDrive(leftStick, rightStick, squaredInputs);
   }
 
   @Override
