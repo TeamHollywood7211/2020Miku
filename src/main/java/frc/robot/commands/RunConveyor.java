@@ -32,7 +32,7 @@ public class RunConveyor extends CommandBase {
   public void execute() {
     if (RobotContainer.operatorJoystick.getRawAxis(2) >= 0.5 && conveyorClear == true){
     RobotContainer.m_conveyor.frontConveyor.set(speed);
-    RobotContainer.m_conveyor.backConveyor.set(speed);
+    RobotContainer.m_conveyor.backConveyor.set(speed * 0.9);
     }
     else{
       RobotContainer.m_conveyor.frontConveyor.set(0);

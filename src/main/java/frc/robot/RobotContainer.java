@@ -36,6 +36,7 @@ public class RobotContainer {
   public DriveChassis m_driveChassis;
 
   public static TurnTurret m_turnTurret;
+  public static RunHarvester m_runHarvester;
 
   public final static Joystick driverJoystick = new Joystick(0);
 
@@ -51,6 +52,9 @@ public class RobotContainer {
     // That means that the Y axis drives forward
     // and backward, and the X turns left and right.
     new DriveChassis(m_chassis);
+    
+    new LimelightValues();
+    LimelightValues.PrintLimelightValues();
   }
 
   /**
@@ -70,8 +74,6 @@ public class RobotContainer {
    * {@link edu.wpi.first.wpilibj2.command.button.JoystickButton}.
    */
   private void configureButtonBindings() {
-    harvesterArmButton.whenPressed(new RunHarvester(m_harvester));
-    harvesterMotorButton.whenPressed(new RunHarvester(m_harvester));
   }
 }
 
