@@ -25,12 +25,12 @@ public final class Constants {
 
     //Find and place the limelight values and place them in these values according to their documentation.
     static NetworkTable table = NetworkTableInstance.getDefault().getTable("limelight");
-    static NetworkTableEntry tx = table.getEntry("tx");
+    public static NetworkTableEntry tx = table.getEntry("tx");
     static NetworkTableEntry ty = table.getEntry("ty");
     static NetworkTableEntry ta = table.getEntry("ta");
 
     // read values periodically
-    static double x = tx.getDouble(0.0);
+    public static double x = tx.getDouble(0.0);
     static double y = ty.getDouble(0.0);
     static double area = ta.getDouble(0.0);
 }

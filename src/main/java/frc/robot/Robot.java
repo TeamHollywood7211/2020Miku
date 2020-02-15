@@ -27,7 +27,7 @@ public class Robot extends TimedRobot {
   private Command m_runConveyor = new RunConveyor(RobotContainer.m_conveyor);
   private Command m_runShooter = new RunShooter(RobotContainer.m_shooter);
   private Command m_turnTurret = new TurnTurret(RobotContainer.m_turret);
-
+  private Command m_runHarvester = new RunHarvester(RobotContainer.m_harvester);
   /**
    * This function is run when the robot is first started up and should be used
    * for any initialization code.
@@ -102,6 +102,8 @@ public class Robot extends TimedRobot {
   
     //Turn the top turret
     m_turnTurret.schedule();
+
+    m_runHarvester.schedule();
   }
 
   /**

@@ -31,10 +31,12 @@ public class RunShooter extends CommandBase {
   @Override
   public void execute() {
     if (RobotContainer.operatorJoystick.getRawAxis(3) >= 0.5 && cellReady == true){
-      RobotContainer.m_shooter.shootingMotor.set(1);
+      RobotContainer.m_shooter.shootingFrontMotor.set(1);
+      RobotContainer.m_shooter.shootingBackMotor.set(-1);
       }
       else{
-        RobotContainer.m_shooter.shootingMotor.set(0);
+        RobotContainer.m_shooter.shootingFrontMotor.set(0);
+        RobotContainer.m_shooter.shootingBackMotor.set(0);
       }
   }
 
