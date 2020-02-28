@@ -23,7 +23,7 @@ public class Turret extends SubsystemBase {
    * Creates a new Turret.
    */
 
-  public CANSparkMax turretMotor;
+  public static CANSparkMax turretMotor;
   public CANEncoder turretEncoder;
   public static NetworkTable table = NetworkTableInstance.getDefault().getTable("limelight");
   public static NetworkTableEntry tx = table.getEntry("tx");
@@ -34,21 +34,22 @@ public class Turret extends SubsystemBase {
     turretEncoder = new CANEncoder(turretMotor);
   }
 
-  public void DriveTurret(){
+  public static void DriveTurret() {
     double Kp = 0.1; // Proportional control constant
     double x = tx.getDouble(0.0);
 
+    // If A is held down, run a PID loop to center the turret.
     if (RobotContainer.operatorJoystick.getRawButton(1) == true) {
       double headingError = -x;
       double turretAdjust = 0;
-      if (x > 0.5){
-        turretAdjust = Kp*headingError;
-        }
-      else if (x < 0.5){
-        turretAdjust = Kp*headingError;
-        }     
+      if (x > 0.5) {
+        turretAdjust = Kp * headingError;
+      } else if (x < 0.5) {
+        turretAdjust = Kp * headingError;
+      }
       turretMotor.set(turretAdjust);
     }
+    //If we're not auto adjusting, use the operator right stick x axis to move it left/right.
     else if(RobotContainer.operatorJoystick.getRawAxis(4) > 0.1){
       turretMotor.set(-1);
     }

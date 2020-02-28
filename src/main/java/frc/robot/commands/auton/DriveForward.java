@@ -5,16 +5,16 @@
 /* the project.                                                               */
 /*----------------------------------------------------------------------------*/
 
-package frc.robot.commands;
+package frc.robot.commands.auton;
 
 import edu.wpi.first.wpilibj2.command.CommandBase;
 import frc.robot.subsystems.Chassis;
 
-public class DriveChassis extends CommandBase {
+public class DriveForward extends CommandBase {
   /**
-   * Creates a new DriveChassis.
+   * Creates a new DriveForward.
    */
-  public DriveChassis(Chassis chassis) {
+  public DriveForward(Chassis chassis) {
     // Use addRequirements() here to declare subsystem dependencies.
     addRequirements(chassis);
   }
@@ -27,14 +27,15 @@ public class DriveChassis extends CommandBase {
   // Called every time the scheduler runs while the command is scheduled.
   @Override
   public void execute() {
-    //Use our arcade drive command
-    Chassis.DriveByJoystick();
+    while(Chassis.rightEncoder.getPosition() < 1000);{
+    Chassis.diffDrive.tankDrive(1, 1, false);
+    }
+    Chassis.diffDrive.tankDrive(0, 0, false);
   }
 
   // Called once the command ends or is interrupted.
   @Override
   public void end(boolean interrupted) {
-    Chassis.driveTank(0,0,false);
   }
 
   // Returns true when the command should end.
