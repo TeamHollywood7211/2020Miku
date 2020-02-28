@@ -18,8 +18,8 @@ public class Conveyor extends SubsystemBase {
   /**
    * Creates a new Conveyor.
    */
-  public CANSparkMax frontConveyor;
-  public CANSparkMax backConveyor;
+  public static CANSparkMax frontConveyor;
+  public static CANSparkMax backConveyor;
 
   public Conveyor() {
     frontConveyor = new CANSparkMax(30, MotorType.kBrushless);

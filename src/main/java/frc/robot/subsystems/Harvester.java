@@ -18,8 +18,8 @@ public class Harvester extends SubsystemBase {
    * Creates a new Harvester.
    */
 
-  public DoubleSolenoid harvesterArm;
-  public CANSparkMax harvesterMotor;
+  public static DoubleSolenoid harvesterArm;
+  public static CANSparkMax harvesterMotor;
 
   public Harvester() {
     harvesterArm = new DoubleSolenoid(0,1);

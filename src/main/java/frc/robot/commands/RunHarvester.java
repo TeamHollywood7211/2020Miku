@@ -25,28 +25,30 @@ public class RunHarvester extends CommandBase {
 
   boolean armExtended;
   public boolean returnValue(){
-    if(RobotContainer.m_harvester.harvesterArm.get() == DoubleSolenoid.Value.kForward){
+    //Tell us whether or not the arm is extended.
+    if(Harvester.harvesterArm.get() == DoubleSolenoid.Value.kForward){
       armExtended = true;
     }
-    else if(RobotContainer.m_harvester.harvesterArm.get() == DoubleSolenoid.Value.kReverse || RobotContainer.m_harvester.harvesterArm.get() == DoubleSolenoid.Value.kOff){
-    armExtended = false;
+    else if(Harvester.harvesterArm.get() == DoubleSolenoid.Value.kReverse || Harvester.harvesterArm.get() == DoubleSolenoid.Value.kOff){
+      armExtended = false;
     }
   return armExtended;
 }
   public void harvesterArm(boolean extend){
-
+    //A toggle to check if the pneumatics is extended or not to reuse the same button.
     if (extend == true){
-      RobotContainer.m_harvester.harvesterArm.set(DoubleSolenoid.Value.kForward);
+      Harvester.harvesterArm.set(DoubleSolenoid.Value.kForward);
     }
     else if(extend == false){
-      RobotContainer.m_harvester.harvesterArm.set(DoubleSolenoid.Value.kReverse);
+      Harvester.harvesterArm.set(DoubleSolenoid.Value.kReverse);
     }
   }
-  int motorPower;
+  
+  double motorPower;
   public void harvesterMotor(){
     //Check if the arm is extended and turn on the motors if it is.
     if(RobotContainer.operatorJoystick.getRawButton(6)){
-      motorPower = 1;
+      motorPower = 0.8;
     }
     else{
       motorPower = 0;
@@ -71,7 +73,7 @@ public class RunHarvester extends CommandBase {
       }
     }
     harvesterMotor();
-    RobotContainer.m_harvester.harvesterMotor.set(motorPower);
+    Harvester.harvesterMotor.set(motorPower);
   }
 
   // Called once the command ends or is interrupted.

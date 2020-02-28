@@ -8,15 +8,13 @@
 package frc.robot.commands;
 
 import edu.wpi.first.wpilibj2.command.CommandBase;
-import frc.robot.subsystems.Chassis;
 
-public class DriveChassis extends CommandBase {
+public class RunColorWheel extends CommandBase {
   /**
-   * Creates a new DriveChassis.
+   * Creates a new RunColorWheel.
    */
-  public DriveChassis(Chassis chassis) {
+  public RunColorWheel() {
     // Use addRequirements() here to declare subsystem dependencies.
-    addRequirements(chassis);
   }
 
   // Called when the command is initially scheduled.
@@ -27,14 +25,11 @@ public class DriveChassis extends CommandBase {
   // Called every time the scheduler runs while the command is scheduled.
   @Override
   public void execute() {
-    //Use our arcade drive command
-    Chassis.DriveByJoystick();
   }
 
   // Called once the command ends or is interrupted.
   @Override
   public void end(boolean interrupted) {
-    Chassis.driveTank(0,0,false);
   }
 
   // Returns true when the command should end.

@@ -16,6 +16,7 @@ public class RunShooter extends CommandBase {
    * Creates a new RunShooter.
    */
   private boolean cellReady = true;
+
   public RunShooter(Shooter shooter) {
     // Use addRequirements() here to declare subsystem dependencies.
     addRequirements(shooter);
@@ -30,14 +31,15 @@ public class RunShooter extends CommandBase {
   // Called every time the scheduler runs while the command is scheduled.
   @Override
   public void execute() {
+    //check the operator controller to see if we want to shoot it. If we do, fire.
     if (RobotContainer.operatorJoystick.getRawAxis(3) >= 0.5 && cellReady == true){
-      RobotContainer.m_shooter.shootingFrontMotor.set(1);
-      RobotContainer.m_shooter.shootingBackMotor.set(-1);
+      Shooter.shootingFrontMotor.set(1);
+      Shooter.shootingBackMotor.set(-1);
       }
-      else{
-        RobotContainer.m_shooter.shootingFrontMotor.set(0);
-        RobotContainer.m_shooter.shootingBackMotor.set(0);
-      }
+    else{
+      Shooter.shootingFrontMotor.set(0);
+      Shooter.shootingBackMotor.set(0);
+    }
   }
 
   // Called once the command ends or is interrupted.

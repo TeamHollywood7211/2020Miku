@@ -5,18 +5,18 @@
 /* the project.                                                               */
 /*----------------------------------------------------------------------------*/
 
-package frc.robot.commands;
+package frc.robot.commands.auton;
 
 import edu.wpi.first.wpilibj2.command.CommandBase;
-import frc.robot.subsystems.Chassis;
+import frc.robot.subsystems.Shooter;
 
-public class DriveChassis extends CommandBase {
+public class ShooterAuton extends CommandBase {
   /**
-   * Creates a new DriveChassis.
+   * Creates a new ShooterAuton.
    */
-  public DriveChassis(Chassis chassis) {
+  public ShooterAuton(Shooter shooter) {
     // Use addRequirements() here to declare subsystem dependencies.
-    addRequirements(chassis);
+    addRequirements(shooter);
   }
 
   // Called when the command is initially scheduled.
@@ -27,14 +27,13 @@ public class DriveChassis extends CommandBase {
   // Called every time the scheduler runs while the command is scheduled.
   @Override
   public void execute() {
-    //Use our arcade drive command
-    Chassis.DriveByJoystick();
+    Shooter.shootingFrontMotor.set(1);
+    Shooter.shootingBackMotor.set(-1);
   }
 
   // Called once the command ends or is interrupted.
   @Override
   public void end(boolean interrupted) {
-    Chassis.driveTank(0,0,false);
   }
 
   // Returns true when the command should end.
