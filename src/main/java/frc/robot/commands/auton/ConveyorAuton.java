@@ -22,13 +22,16 @@ public class ConveyorAuton extends CommandBase {
   // Called when the command is initially scheduled.
   @Override
   public void initialize() {
+    Conveyor.frontConveyor.set(0.8);
+    Conveyor.backConveyor.set(0.7);
   }
+  
 
   // Called every time the scheduler runs while the command is scheduled.
   @Override
   public void execute() {
-  Conveyor.frontConveyor.set(0.8);
-  Conveyor.backConveyor.set(0.7);
+  /*Conveyor.frontConveyor.set(0.8);
+  Conveyor.backConveyor.set(0.7);*/
   }
 
   // Called once the command ends or is interrupted.

@@ -13,8 +13,8 @@ import edu.wpi.first.wpilibj2.command.Command;
 import edu.wpi.first.wpilibj2.command.CommandScheduler;
 
 import frc.robot.commands.*;
-import frc.robot.commands.auton.HarvesterAuton;
-import frc.robot.commands.auton.SeekAndCenter;
+import frc.robot.commands.auton.*;
+import frc.robot.subsystems.Chassis;
 
 /**
  * The VM is configured to automatically run this class, and to call the functions corresponding to
@@ -25,6 +25,7 @@ import frc.robot.commands.auton.SeekAndCenter;
 public class Robot extends TimedRobot {
   
   //Auton Commands
+  private Command m_autonSuccession = new AutonSuccession();
   private Command m_harvesterAuton = new HarvesterAuton(RobotContainer.m_harvester);
   private Command m_seekAndCenter = new SeekAndCenter(RobotContainer.m_turret);
 
@@ -79,11 +80,10 @@ public class Robot extends TimedRobot {
    */
   @Override
   public void autonomousInit() {
-
     // schedule the autonomous command (example)
       m_harvesterAuton.schedule();
+      m_autonSuccession.schedule();
       m_seekAndCenter.schedule();
-
   }
 
   /**
@@ -91,8 +91,9 @@ public class Robot extends TimedRobot {
    */
   @Override
   public void autonomousPeriodic() {
-    m_harvesterAuton.schedule();
+    System.out.println("Drive Encoder: " + Chassis.rightEncoder.getPosition());
   }
+  
 
   @Override
   public void teleopInit() {
@@ -102,6 +103,7 @@ public class Robot extends TimedRobot {
     // this line or comment it out.
     m_harvesterAuton.cancel();
     m_seekAndCenter.cancel();
+    m_autonSuccession.cancel();
 
     //Run the robot conveyor
     m_runConveyor.schedule();

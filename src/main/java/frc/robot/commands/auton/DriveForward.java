@@ -22,15 +22,27 @@ public class DriveForward extends CommandBase {
   // Called when the command is initially scheduled.
   @Override
   public void initialize() {
+    //Each 14 tick = 1 inch
+    Chassis.rightEncoder.setPosition(0);
+
+    while(Chassis.rightEncoder.getPosition() < 687.549354157){
+      Chassis.diffDrive.arcadeDrive(-0.5, 0);
+      }
+    Chassis.diffDrive.arcadeDrive(0, 0);
+      
   }
 
   // Called every time the scheduler runs while the command is scheduled.
   @Override
   public void execute() {
-    while(Chassis.rightEncoder.getPosition() < 1000);{
-    Chassis.diffDrive.tankDrive(1, 1, false);
+    /*if(Chassis.rightEncoder.getPosition() < 1000){
+      Chassis.diffDrive.arcadeDrive(1, 0);
     }
-    Chassis.diffDrive.tankDrive(0, 0, false);
+    else{
+      Chassis.diffDrive.arcadeDrive(0, 0);
+    }*/
+    System.out.println("Drive Encoder: " + Chassis.rightEncoder.getPosition());
+    
   }
 
   // Called once the command ends or is interrupted.
@@ -41,6 +53,9 @@ public class DriveForward extends CommandBase {
   // Returns true when the command should end.
   @Override
   public boolean isFinished() {
+    if(Chassis.rightEncoder.getPosition() >= 687.549354157){
+      return true;
+    }
     return false;
   }
 }

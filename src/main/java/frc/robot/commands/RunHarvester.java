@@ -9,6 +9,7 @@ package frc.robot.commands;
 
 import edu.wpi.first.wpilibj.DoubleSolenoid;
 import edu.wpi.first.wpilibj2.command.CommandBase;
+import edu.wpi.first.wpilibj2.command.WaitCommand;
 import frc.robot.RobotContainer;
 import frc.robot.subsystems.Harvester;
 
@@ -65,10 +66,12 @@ public class RunHarvester extends CommandBase {
   public void execute() {
     //Tell the code the harvester is extending its arm and then extend it.
     if(RobotContainer.operatorJoystick.getRawButton(8)){
+      new WaitCommand(1);
       if(returnValue() == false){
     harvesterArm(true);
       }
       else if(returnValue() == true){
+        new WaitCommand(1);
         harvesterArm(false);
       }
     }

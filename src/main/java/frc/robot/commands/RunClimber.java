@@ -49,10 +49,11 @@ public class RunClimber extends CommandBase {
       RobotContainer.operatorJoystick.setRumble(RumbleType.kRightRumble, 0);
     }
 
-
+    //Lower Arms
     if (RobotContainer.driverJoystick.getPOV() == 180) {
       Climber.climberMaster.set(1);
     }
+    //Raise Arms
     else if (RobotContainer.driverJoystick.getPOV() == 0) { 
       Climber.climberMaster.set(-1);
     }
