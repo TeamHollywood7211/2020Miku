@@ -23,34 +23,24 @@ public class HarvesterAuton extends CommandBase {
   // Called when the command is initially scheduled.
   @Override
   public void initialize() {
-    harvesterArm(true);
+    Harvester.harvesterArm.set(DoubleSolenoid.Value.kForward);
+    Harvester.harvesterMotor.set(0.5);
   }
 
   // Called every time the scheduler runs while the command is scheduled.
   @Override
   public void execute() {
-    Harvester.harvesterMotor.set(0.5);
+  
   }
 
   // Called once the command ends or is interrupted.
   @Override
   public void end(boolean interrupted) {
-    Harvester.harvesterMotor.set(0);
   }
 
   // Returns true when the command should end.
   @Override
   public boolean isFinished() {
     return false;
-  }
-
-  public void harvesterArm(boolean extend){
-    //A toggle to check if the pneumatics is extended or not to reuse the same button.
-    if (extend == true){
-      Harvester.harvesterArm.set(DoubleSolenoid.Value.kForward);
-    }
-    else if(extend == false){
-      Harvester.harvesterArm.set(DoubleSolenoid.Value.kReverse);
-    }
   }
 }
