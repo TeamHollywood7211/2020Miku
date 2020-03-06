@@ -24,9 +24,9 @@ import frc.robot.subsystems.Chassis;
  */
 public class Robot extends TimedRobot {
   
-  //Auton Commands
-  private Command m_autonSuccession = new AutonSuccession();
-  private Command m_harvesterAuton = new HarvesterAuton(RobotContainer.m_harvester);
+  //Auton Commands;
+  private Command m_threeBallSuccession = new ThreeBallSuccession();
+  //private Command m_sixBallSuccession = new SixBallSuccession();
   private Command m_seekAndCenter = new SeekAndCenter(RobotContainer.m_turret);
 
   //Teleop Commands
@@ -36,7 +36,6 @@ public class Robot extends TimedRobot {
   private Command m_runHarvester = new RunHarvester(RobotContainer.m_harvester);
   private Command m_climber = new RunClimber(RobotContainer.m_climber);
 
-
   /**
    * This function is run when the robot is first started up and should be used
    * for any initialization code.
@@ -44,7 +43,9 @@ public class Robot extends TimedRobot {
   @Override
   public void robotInit() {
     new RobotContainer();
-    CameraServer.getInstance().startAutomaticCapture();
+    CameraServer.getInstance().startAutomaticCapture("Conveyor", 0);
+    CameraServer.getInstance().startAutomaticCapture("Front Facing Camera", 1);
+  
   }
 
   /**
@@ -61,6 +62,7 @@ public class Robot extends TimedRobot {
     // and running subsystem periodic() methods.  This must be called from the robot's periodic
     // block in order for anything in the Command-based framework to work.
     CommandScheduler.getInstance().run();
+    System.out.println("Drive Encoder: " + Chassis.rightEncoder.getPosition());
   
   }
 
@@ -81,9 +83,9 @@ public class Robot extends TimedRobot {
   @Override
   public void autonomousInit() {
     // schedule the autonomous command (example)
-      m_harvesterAuton.schedule();
-      m_autonSuccession.schedule();
-      m_seekAndCenter.schedule();
+    m_threeBallSuccession.schedule();
+      
+    m_seekAndCenter.schedule();
   }
 
   /**
@@ -101,9 +103,8 @@ public class Robot extends TimedRobot {
     // teleop starts running. If you want the autonomous to
     // continue until interrupted by another command, remove
     // this line or comment it out.
-    m_harvesterAuton.cancel();
     m_seekAndCenter.cancel();
-    m_autonSuccession.cancel();
+    m_threeBallSuccession.cancel();
 
     //Run the robot conveyor
     m_runConveyor.schedule();

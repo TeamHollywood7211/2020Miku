@@ -10,12 +10,12 @@ package frc.robot.commands.auton;
 import edu.wpi.first.wpilibj2.command.CommandBase;
 import frc.robot.subsystems.Chassis;
 
-public class DriveForward extends CommandBase {
+public class DriveReverse extends CommandBase {
   /**
    * Creates a new DriveForward.
    */
   private final double targetDistance = 37;
-  public DriveForward(Chassis chassis) {
+  public DriveReverse(Chassis chassis) {
     // Use addRequirements() here to declare subsystem dependencies.
     addRequirements(chassis);
   }
@@ -23,11 +23,8 @@ public class DriveForward extends CommandBase {
   // Called when the command is initially scheduled.
   @Override
   public void initialize() {
-    
-    Chassis.rightEncoder.setPosition(0);
-
-    while(Chassis.rightEncoder.getPosition() < targetDistance){
-      Chassis.diffDrive.arcadeDrive(-0.5, 0);
+    while(Chassis.rightEncoder.getPosition() > targetDistance){
+      Chassis.diffDrive.arcadeDrive(0.5, 0);
       }
       Chassis.diffDrive.arcadeDrive(0, 0);
   }
@@ -53,7 +50,7 @@ public class DriveForward extends CommandBase {
   // Returns true when the command should end.
   @Override
   public boolean isFinished() {
-    if(Chassis.rightEncoder.getPosition() >= targetDistance){
+    if(Chassis.rightEncoder.getPosition() <= targetDistance){
       return true;
     }
     return false;

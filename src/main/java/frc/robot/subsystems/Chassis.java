@@ -83,6 +83,7 @@ public class Chassis extends SubsystemBase {
   public void periodic() {
     // Set the default command for a subsystem here.
     setDefaultCommand(new DriveChassis(RobotContainer.m_chassis));
+    System.out.println("Drive Encoder: " + rightEncoder.getPosition());
 
   }
 

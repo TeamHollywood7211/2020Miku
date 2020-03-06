@@ -7,42 +7,31 @@
 
 package frc.robot.commands.auton;
 
+import edu.wpi.first.wpilibj.DoubleSolenoid;
 import edu.wpi.first.wpilibj2.command.CommandBase;
-import frc.robot.subsystems.Chassis;
+import frc.robot.subsystems.Harvester;
 
-public class DriveForward extends CommandBase {
+public class HarvesterReturn extends CommandBase {
   /**
-   * Creates a new DriveForward.
+   * Creates a new HarvesterAuton.
    */
-  private final double targetDistance = 37;
-  public DriveForward(Chassis chassis) {
+    public final double motorPower = 0;
+  public HarvesterReturn(Harvester harvester) {
     // Use addRequirements() here to declare subsystem dependencies.
-    addRequirements(chassis);
+    addRequirements(harvester);
   }
 
   // Called when the command is initially scheduled.
   @Override
   public void initialize() {
-    
-    Chassis.rightEncoder.setPosition(0);
-
-    while(Chassis.rightEncoder.getPosition() < targetDistance){
-      Chassis.diffDrive.arcadeDrive(-0.5, 0);
-      }
-      Chassis.diffDrive.arcadeDrive(0, 0);
+    Harvester.harvesterArm.set(DoubleSolenoid.Value.kReverse);
+    Harvester.harvesterMotor.set(motorPower);
   }
 
   // Called every time the scheduler runs while the command is scheduled.
   @Override
   public void execute() {
-    /*if(Chassis.rightEncoder.getPosition() < target Distance){
-      Chassis.diffDrive.arcadeDrive(1, 0);
-    }
-    else{
-      Chassis.diffDrive.arcadeDrive(0, 0);
-    }*/
-    System.out.println("Drive Encoder: " + Chassis.rightEncoder.getPosition());
-    
+  
   }
 
   // Called once the command ends or is interrupted.
@@ -53,7 +42,7 @@ public class DriveForward extends CommandBase {
   // Returns true when the command should end.
   @Override
   public boolean isFinished() {
-    if(Chassis.rightEncoder.getPosition() >= targetDistance){
+    if(Harvester.harvesterMotor.get() == motorPower){
       return true;
     }
     return false;
