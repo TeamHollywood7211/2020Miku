@@ -8,22 +8,22 @@
 package frc.robot.subsystems;
 
 import edu.wpi.first.wpilibj2.command.SubsystemBase;
-import edu.wpi.first.wpilibj.Solenoid;
+import edu.wpi.first.wpilibj.DoubleSolenoid;
 
 import com.revrobotics.CANSparkMax;
-//import com.revrobotics.CANSparkMaxLowLevel.MotorType;
+import com.revrobotics.CANSparkMaxLowLevel.MotorType;
 
 public class Harvester extends SubsystemBase {
   /**
    * Creates a new Harvester.
    */
 
-  public Solenoid harvesterArm;
-  public CANSparkMax harvesterMotor;
+  public static DoubleSolenoid harvesterArm;
+  public static CANSparkMax harvesterMotor;
 
   public Harvester() {
-    harvesterArm = new Solenoid(0);
-    //harvesterMotor = new CANSparkMax(20, MotorType.kBrushless);
+    harvesterArm = new DoubleSolenoid(0,1);
+    harvesterMotor = new CANSparkMax(20, MotorType.kBrushless);
 
   }
 

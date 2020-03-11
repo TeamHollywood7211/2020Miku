@@ -9,14 +9,18 @@ package frc.robot.commands;
 
 import edu.wpi.first.wpilibj2.command.CommandBase;
 import frc.robot.RobotContainer;
+import frc.robot.subsystems.Shooter;
+
 public class RunShooter extends CommandBase {
   /**
    * Creates a new RunShooter.
    */
   private boolean cellReady = true;
-  public RunShooter() {
+
+  public RunShooter(Shooter shooter) {
     // Use addRequirements() here to declare subsystem dependencies.
-    //addRequirements(RobotContainer.m_shooter);
+    addRequirements(shooter);
+
   }
 
   // Called when the command is initially scheduled.
@@ -27,12 +31,15 @@ public class RunShooter extends CommandBase {
   // Called every time the scheduler runs while the command is scheduled.
   @Override
   public void execute() {
+    //check the operator controller to see if we want to shoot it. If we do, fire.
     if (RobotContainer.operatorJoystick.getRawAxis(3) >= 0.5 && cellReady == true){
-      RobotContainer.m_conveyor.frontConveyor.set(1);
+      Shooter.shootingFrontMotor.set(1);
+      Shooter.shootingBackMotor.set(-1);
       }
-      else{
-        RobotContainer.m_shooter.shootingMotor.set(0);
-      }
+    else{
+      Shooter.shootingFrontMotor.set(0);
+      Shooter.shootingBackMotor.set(0);
+    }
   }
 
   // Called once the command ends or is interrupted.

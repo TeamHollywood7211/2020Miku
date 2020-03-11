@@ -13,6 +13,7 @@ import edu.wpi.first.wpilibj.GenericHID;
 import edu.wpi.first.wpilibj.Joystick;
 import edu.wpi.first.wpilibj.XboxController;
 import edu.wpi.first.wpilibj2.command.button.JoystickButton;
+import edu.wpi.first.wpilibj2.command.button.POVButton;
 
 
 
@@ -30,28 +31,42 @@ public class RobotContainer {
   public static Harvester m_harvester = new Harvester();
   public static Conveyor m_conveyor = new Conveyor();
   public static Shooter m_shooter = new Shooter();
-  public static Lift m_lift = new Lift();
   public static Turret m_turret = new Turret();
+  public static Climber m_climber = new Climber();
 
   //The robot's commands
   public DriveChassis m_driveChassis;
-  public static RunConveyor m_runConveyor;
-  public static RunShooter m_runShooter;
+
   public static TurnTurret m_turnTurret;
+  public static RunHarvester m_runHarvester;
 
   public final static Joystick driverJoystick = new Joystick(0);
+  public final static POVButton upClimberButton = new POVButton(driverJoystick, 180);
+  public final static POVButton downClimberButton = new POVButton(driverJoystick, 0);
 
   public final static Joystick operatorJoystick = new Joystick(1);
-  public final static JoystickButton harvesterButton = new JoystickButton(operatorJoystick, 1);
+  public final static JoystickButton harvesterArmButton = new JoystickButton(operatorJoystick, 8);
+  public final static JoystickButton harvesterMotorButton = new JoystickButton(operatorJoystick, 6);
+  
+  public final static POVButton reverseConveyorButton = new POVButton(operatorJoystick, 90);
    
+  static boolean isPressed;
 
-
+  public static boolean checkPOV(Joystick joystick) {
+    if (joystick.getPOV() == -1) {
+      isPressed = false;
+    }
+    else{
+      isPressed = true;
+    }
+    return isPressed;
+  }
   // @Override
   public void teleopPeriodic() {
     // Drive with arcade drive.
     // That means that the Y axis drives forward
     // and backward, and the X turns left and right.
-    m_driveChassis.execute();
+    new DriveChassis(m_chassis); 
   }
 
   /**
@@ -71,8 +86,6 @@ public class RobotContainer {
    * {@link edu.wpi.first.wpilibj2.command.button.JoystickButton}.
    */
   private void configureButtonBindings() {
-    harvesterButton.whileHeld(new RunHarvester());
-
   }
 }
 
