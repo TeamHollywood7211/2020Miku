@@ -74,6 +74,8 @@ public class Robot extends TimedRobot {
     // commands, running already-scheduled commands, removing finished or interrupted commands,
     // and running subsystem periodic() methods.  This must be called from the robot's periodic
     // block in order for anything in the Command-based framework to work.
+    select();
+    
     CommandScheduler.getInstance().run();
     System.out.println("Drive Encoder: " + Chassis.rightEncoder.getPosition());
 
@@ -177,7 +179,7 @@ public class Robot extends TimedRobot {
 
   // An example selector method for the selectcommand.  Returns the selector that will select
   // which command to run.  Can base this choice on logical conditions evaluated at runtime.
-  private CommandSelector select() {
+  public CommandSelector select() {
     if(RobotContainer.driverJoystick.getRawButton(8)){
       return CommandSelector.THREE;
     }
