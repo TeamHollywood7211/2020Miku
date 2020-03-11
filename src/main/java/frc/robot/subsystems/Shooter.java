@@ -15,6 +15,7 @@ import frc.robot.RobotContainer;
 import frc.robot.commands.RunShooter;
 
 import com.revrobotics.CANSparkMax;
+import com.revrobotics.CANEncoder;
 import com.revrobotics.CANSparkMaxLowLevel.MotorType;
 
 public class Shooter extends SubsystemBase {
@@ -23,6 +24,8 @@ public class Shooter extends SubsystemBase {
    */
   public static CANSparkMax shootingFrontMotor;
   public static CANSparkMax shootingBackMotor;
+
+  public static CANEncoder shooterEncoder;
   static double deviser;
 
   public static NetworkTable table = NetworkTableInstance.getDefault().getTable("limelight");
@@ -40,6 +43,7 @@ public class Shooter extends SubsystemBase {
   public Shooter() {
     shootingFrontMotor = new CANSparkMax(40, MotorType.kBrushless);
     shootingBackMotor = new CANSparkMax(41, MotorType.kBrushless);
+    shooterEncoder = new CANEncoder(shootingFrontMotor);
   }
   @Override
   

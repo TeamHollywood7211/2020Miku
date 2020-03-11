@@ -15,7 +15,6 @@ public class HarvesterAuton extends CommandBase {
   /**
    * Creates a new HarvesterAuton.
    */
-    public final double motorPower = 0.7;
   public HarvesterAuton(Harvester harvester) {
     // Use addRequirements() here to declare subsystem dependencies.
     addRequirements(harvester);
@@ -25,7 +24,7 @@ public class HarvesterAuton extends CommandBase {
   @Override
   public void initialize() {
     Harvester.harvesterArm.set(DoubleSolenoid.Value.kForward);
-    Harvester.harvesterMotor.set(motorPower);
+    Harvester.harvesterMotor.set(0.5);
   }
 
   // Called every time the scheduler runs while the command is scheduled.
@@ -42,9 +41,6 @@ public class HarvesterAuton extends CommandBase {
   // Returns true when the command should end.
   @Override
   public boolean isFinished() {
-    if(Harvester.harvesterArm.get() == DoubleSolenoid.Value.kForward){
-      return true;
-    }
     return false;
   }
 }

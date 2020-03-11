@@ -20,6 +20,6 @@ public class FeedAndFire extends ParallelCommandGroup {
   public FeedAndFire() {
     // Add your commands in the super() call, e.g.
     // super(new FooCommand(), new BarCommand());
-    super(new ShooterAuton(RobotContainer.m_shooter), new ConveyorAuton(RobotContainer.m_conveyor));
+    super(new ConveyorAuton(RobotContainer.m_conveyor), new ShooterAuton(RobotContainer.m_shooter));
   }
 }

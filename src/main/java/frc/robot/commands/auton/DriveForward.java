@@ -11,10 +11,10 @@ import edu.wpi.first.wpilibj2.command.CommandBase;
 import frc.robot.subsystems.Chassis;
 
 public class DriveForward extends CommandBase {
+  double targetDistance = 37;
   /**
    * Creates a new DriveForward.
    */
-  private final double targetDistance = 37;
   public DriveForward(Chassis chassis) {
     // Use addRequirements() here to declare subsystem dependencies.
     addRequirements(chassis);
@@ -23,19 +23,20 @@ public class DriveForward extends CommandBase {
   // Called when the command is initially scheduled.
   @Override
   public void initialize() {
-    
+    //Each 14 tick = 1 inch
     Chassis.rightEncoder.setPosition(0);
 
     while(Chassis.rightEncoder.getPosition() < targetDistance){
       Chassis.diffDrive.arcadeDrive(-0.5, 0);
       }
-      Chassis.diffDrive.arcadeDrive(0, 0);
+    Chassis.diffDrive.arcadeDrive(0, 0);
+      
   }
 
   // Called every time the scheduler runs while the command is scheduled.
   @Override
   public void execute() {
-    /*if(Chassis.rightEncoder.getPosition() < target Distance){
+    /*if(Chassis.rightEncoder.getPosition() < 1000){
       Chassis.diffDrive.arcadeDrive(1, 0);
     }
     else{

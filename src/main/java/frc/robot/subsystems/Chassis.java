@@ -7,6 +7,7 @@
 
 package frc.robot.subsystems;
 
+import edu.wpi.first.wpilibj.BuiltInAccelerometer;
 import edu.wpi.first.wpilibj.SpeedControllerGroup;
 import edu.wpi.first.wpilibj2.command.SubsystemBase;
 import frc.robot.RobotContainer;
@@ -23,6 +24,8 @@ import com.revrobotics.CANSparkMaxLowLevel.MotorType;
 public class Chassis extends SubsystemBase {
   // Put methods for controlling this subsystem
   // here. Call these from Commands.
+  public static BuiltInAccelerometer accel;
+
   private static CANSparkMax leftFront;
   private static CANSparkMax leftMiddle;
   private static CANSparkMax leftBack;
@@ -38,6 +41,8 @@ public class Chassis extends SubsystemBase {
   public static double rampRate = 1.15;
 
   public Chassis() {
+    accel = new BuiltInAccelerometer();
+
     // Define the left side of the robot and group the motors together.
     leftFront = new CANSparkMax(1, MotorType.kBrushless);
     leftMiddle = new CANSparkMax(2, MotorType.kBrushless);
@@ -65,7 +70,7 @@ public class Chassis extends SubsystemBase {
     boolean squaredInputs = true;
 
     // use the actual FRC provided method with easier access in the defined method.
-    driveArcade(returnLeftAxis(1), -returnRightAxis(4), squaredInputs);
+    driveArcade(antiTip(returnLeftAxis(1)), -returnRightAxis(4), squaredInputs);
     // this.driveTank(returnLeftAxis(1), returnRightAxis(5), squaredInputs);
 
     configureChassis(true, true);
@@ -83,7 +88,6 @@ public class Chassis extends SubsystemBase {
   public void periodic() {
     // Set the default command for a subsystem here.
     setDefaultCommand(new DriveChassis(RobotContainer.m_chassis));
-    System.out.println("Drive Encoder: " + rightEncoder.getPosition());
 
   }
 
@@ -123,5 +127,38 @@ public class Chassis extends SubsystemBase {
     double rightStick = RobotContainer.driverJoystick.getRawAxis(rightAxis);
     return rightStick;
   }
+  static boolean highVelocity;
+  static int timer;
+  public static double antiTip(double moveSpeed){
 
-}
+    
+    if(leftEncoder.getVelocity() > 3500){
+      highVelocity = true;
+      timer = 0;
+    }
+    if(leftEncoder.getVelocity() < 0){
+      highVelocity = false;
+    }
+    if(highVelocity){
+      if(moveSpeed <= 0.3){
+        if(timer < 10){
+          moveSpeed = 0.5;
+          timer++;
+        }
+        if(timer > 10 && getRoll() <= 11){
+          highVelocity = false;
+        }
+      }
+    }
+    return moveSpeed;
+  }
+
+  public static double getRoll(){
+    double X = accel.getX();
+    double Y = accel.getY();
+    double Z = accel.getZ();
+    return Math.atan2(-X, Math.sqrt(Y*Y + Z*Z)) * 180/Math.PI;
+    }
+  }
+
+
