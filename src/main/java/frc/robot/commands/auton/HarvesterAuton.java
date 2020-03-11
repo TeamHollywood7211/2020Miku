@@ -24,7 +24,6 @@ public class HarvesterAuton extends CommandBase {
   @Override
   public void initialize() {
     Harvester.harvesterArm.set(DoubleSolenoid.Value.kForward);
-    Harvester.harvesterMotor.set(0.5);
   }
 
   // Called every time the scheduler runs while the command is scheduled.
@@ -36,11 +35,15 @@ public class HarvesterAuton extends CommandBase {
   // Called once the command ends or is interrupted.
   @Override
   public void end(boolean interrupted) {
+    Harvester.harvesterMotor.set(0.5);
   }
 
   // Returns true when the command should end.
   @Override
   public boolean isFinished() {
+    if( Harvester.harvesterArm.get() == DoubleSolenoid.Value.kForward){
+      return true;
+    }
     return false;
   }
 }

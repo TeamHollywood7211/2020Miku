@@ -8,12 +8,15 @@
 package frc.robot.commands.auton;
 
 import edu.wpi.first.wpilibj2.command.CommandBase;
+import edu.wpi.first.wpilibj.Timer;
 import frc.robot.subsystems.Shooter;
 
 public class ShooterAuton extends CommandBase {
   /**
    * Creates a new ShooterAuton.
    */
+  public final double desiredTime = 4;
+  public Timer time;
   public ShooterAuton(Shooter shooter) {
     // Use addRequirements() here to declare subsystem dependencies.
     addRequirements(shooter);
@@ -22,6 +25,9 @@ public class ShooterAuton extends CommandBase {
   // Called when the command is initially scheduled.
   @Override
   public void initialize() {
+    time = new Timer();
+    time.start();
+    while(time.get() < desiredTime)
     Shooter.shootingFrontMotor.set(1);
     Shooter.shootingBackMotor.set(-1);
   }
@@ -36,12 +42,17 @@ public class ShooterAuton extends CommandBase {
   // Called once the command ends or is interrupted.
   @Override
   public void end(boolean interrupted) {
+    Shooter.shootingFrontMotor.set(0);
+    Shooter.shootingBackMotor.set(0);
+    time.reset();
   }
 
   // Returns true when the command should end.
   @Override
   public boolean isFinished() {
-    
+    if(time.get() > desiredTime){
+      return true;
+    }
     return false;
   }
 }

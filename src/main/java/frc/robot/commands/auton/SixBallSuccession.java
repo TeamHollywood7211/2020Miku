@@ -21,7 +21,7 @@ public class SixBallSuccession extends SequentialCommandGroup {
   public SixBallSuccession() {
     // Add your commands in the super() call, e.g.
     // super(new FooCommand(), new BarCommand());
-    super(new DriveForward(RobotContainer.m_chassis),new FeedAndFire(), new HarvesterAuton(RobotContainer.m_harvester), 
-    new DriveForwardStepTwo(RobotContainer.m_chassis), new DriveReverse(RobotContainer.m_chassis), new FeedAndFire());
+    super(new DriveForward(RobotContainer.m_chassis),new SeekAndCenter(RobotContainer.m_turret),new FeedAndFire(), new HarvesterAuton(RobotContainer.m_harvester), 
+    new DriveForwardStepTwo(RobotContainer.m_chassis), new DriveReverse(RobotContainer.m_chassis), new SeekAndCenter(RobotContainer.m_turret), new FeedAndFire());
   }
 }

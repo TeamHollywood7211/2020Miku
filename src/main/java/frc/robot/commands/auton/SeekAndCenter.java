@@ -21,6 +21,10 @@ public class SeekAndCenter extends CommandBase {
   public static NetworkTable table = NetworkTableInstance.getDefault().getTable("limelight");
   public static NetworkTableEntry tx = table.getEntry("tx");
   public static NetworkTableEntry tv = table.getEntry("tv");
+
+  double x = tx.getDouble(0.0);
+  double v = tv.getDouble(0);
+
   public SeekAndCenter(Turret turret) {
     // Use addRequirements() here to declare subsystem dependencies.
     addRequirements(turret);
@@ -34,18 +38,15 @@ public class SeekAndCenter extends CommandBase {
   // Called every time the scheduler runs while the command is scheduled.
   @Override
   public void execute() {
-    double Kp = 0.1; // Proportional control constant
     double x = tx.getDouble(0.0);
-    boolean v = tv.getBoolean(false);
+    double v = tv.getDouble(0);
+    double Kp = 0.1; // Proportional control constant
       double headingError = -x;
       double turretAdjust = 0;
-    if(v){
-      if (x > 0.5) {
+    if(v == 1){
+      if (x > 0.5 || x < 0.5) {
         turretAdjust = Kp * headingError;
       } 
-      else if (x < 0.5) {
-        turretAdjust = Kp * headingError;
-      }
       Turret.turretMotor.set(turretAdjust);
     }
   }
@@ -53,11 +54,15 @@ public class SeekAndCenter extends CommandBase {
   // Called once the command ends or is interrupted.
   @Override
   public void end(boolean interrupted) {
+    Turret.turretMotor.set(0);
   }
 
   // Returns true when the command should end.
   @Override
   public boolean isFinished() {
+    if((x > 0.45 || x < 55) || v == 0){
+      return true;
+    }
     return false;
   }
 
