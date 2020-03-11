@@ -33,7 +33,7 @@ public class Robot extends TimedRobot {
   private Command m_autonSuccession;
   //private Command m_threeBallSuccession = new ThreeBallSuccession();
   //private Command m_sixBallSuccession = new SixBallSuccession();
-  private Command m_seekAndCenter = new SeekAndCenter(RobotContainer.m_turret);
+  //private Command m_seekAndCenter = new SeekAndCenter(RobotContainer.m_turret);
 
   //Teleop Commands
   private Command m_runConveyor = new RunConveyor(RobotContainer.m_conveyor);
@@ -112,7 +112,7 @@ public class Robot extends TimedRobot {
       m_autonSuccession.schedule();
     }
       
-    m_seekAndCenter.schedule();
+   // m_seekAndCenter.schedule();
   }
 
   /**
@@ -130,7 +130,7 @@ public class Robot extends TimedRobot {
     // teleop starts running. If you want the autonomous to
     // continue until interrupted by another command, remove
     // this line or comment it out.
-    m_seekAndCenter.cancel();
+   // m_seekAndCenter.cancel();
     if(m_autonSuccession != null){
       m_autonSuccession.cancel();
     }
