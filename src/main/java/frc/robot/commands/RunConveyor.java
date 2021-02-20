@@ -33,7 +33,7 @@ public class RunConveyor extends CommandBase {
   public void execute() {
     //check driver for the down button on d-pad to move it in reverse.
     if(RobotContainer.reverseConveyorButton.get()){
-      Conveyor.frontConveyor.set(-speed);
+      Conveyor.frontConveyor.set(speed);
       //Conveyor.backConveyor.set(-speed * 0.9);
     }
     //Make sure our motor is over good enough RPM to get a proper shot off before allowing us to take a shot.
