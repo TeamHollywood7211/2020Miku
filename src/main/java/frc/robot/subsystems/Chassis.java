@@ -79,7 +79,7 @@ public class Chassis extends SubsystemBase {
     boolean squaredInputs = true;
 
     if(RobotContainer.operatorJoystick.getRawButton(1) == true){
-      driveTank(autoAim(), -autoAim(), false);
+      driveTank(autoHorizontal(), -autoHorizontal(), false);
     }
     else{
       // use the actual FRC provided method with easier access in the defined method.
@@ -173,7 +173,7 @@ public class Chassis extends SubsystemBase {
     return Math.atan2(-X, Math.sqrt(Y*Y + Z*Z)) * 180/Math.PI;
     }
 
-    public static double autoAim(){
+    public static double autoHorizontal(){
       double Kp = 0.0075; // Proportional control constant
       double x = tx.getDouble(0.0);
       double v = tv.getDouble(1);

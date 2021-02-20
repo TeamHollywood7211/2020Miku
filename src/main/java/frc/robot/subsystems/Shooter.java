@@ -24,25 +24,25 @@ public class Shooter extends SubsystemBase {
    */
   public static CANSparkMax shootingFrontMotor;
   public static CANSparkMax shootingBackMotor;
+  public static CANSparkMax verticalMotor;
 
   public static CANEncoder shooterEncoder;
   static double deviser;
 
   public static NetworkTable table = NetworkTableInstance.getDefault().getTable("limelight");
-  public static NetworkTableEntry ty = table.getEntry("tx");
+  public static NetworkTableEntry ty = table.getEntry("ty");
   public static NetworkTableEntry tv = table.getEntry("tv");
 
   //work in progress variables for distance//
-  public static double visibleTarget = tv.getDouble(0);
-  public static double a1 = 83.9875579;
-  public static double a2 = ty.getDouble(0);
-  public static double aSum = a1 + a2;
+  //public static double a1 = 83.9875579;
+  //public static double aSum = a1 + a2;
 
   public static double difference = 41.9375;
 
   public Shooter() {
     shootingFrontMotor = new CANSparkMax(40, MotorType.kBrushless);
     shootingBackMotor = new CANSparkMax(41, MotorType.kBrushless);
+    verticalMotor = new CANSparkMax(42, MotorType.kBrushless);
     shooterEncoder = new CANEncoder(shootingFrontMotor);
   }
   @Override
@@ -51,11 +51,11 @@ public class Shooter extends SubsystemBase {
     // This method will be called once per scheduler run
     setDefaultCommand(new RunShooter(RobotContainer.m_shooter));
 
-    calculateDistance();
+    //calculateDistance();
     //System.out.println("Distance: " + calculateDistance());
   }
 
-  public double calculateDistance(){
+ /* public double calculateDistance(){
     double distance;
     //If we can see the target, calulate the distance to the target.
     if(visibleTarget == 1){
@@ -66,5 +66,23 @@ public class Shooter extends SubsystemBase {
       distance = 0;
     }
     return distance;
+  }*/
+  public static double autoVertical(){
+    double Kp = 0.0075; // Proportional control constant
+    double y = ty.getDouble(0.0);
+    double v = tv.getDouble(1);
+    double headingError = -y;
+    double angleAdjust = 0;
+
+    // If A is held down, run a PID loop to center the turret.
+    if(v == 1){
+      if (y > 0.5) {
+        angleAdjust = Kp * headingError;
+      } 
+      else if (y < 0.5) {
+        angleAdjust = Kp * headingError;
+      }
+    }
+    return angleAdjust;
   }
 }

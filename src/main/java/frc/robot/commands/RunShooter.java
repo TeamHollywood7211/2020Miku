@@ -32,6 +32,9 @@ public class RunShooter extends CommandBase {
   @Override
   public void execute() {
     //check the operator controller to see if we want to shoot it. If we do, fire.
+    if(RobotContainer.operatorJoystick.getRawButton(1)){
+      Shooter.verticalMotor.set(Shooter.autoVertical());
+    }
     if (RobotContainer.operatorJoystick.getRawAxis(3) >= 0.5 && cellReady == true){
       Shooter.shootingFrontMotor.set(0.89);
       Shooter.shootingBackMotor.set(-0.89);
