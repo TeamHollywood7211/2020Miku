@@ -42,7 +42,7 @@ public class Shooter extends SubsystemBase {
   public Shooter() {
     shootingFrontMotor = new CANSparkMax(40, MotorType.kBrushless);
     shootingBackMotor = new CANSparkMax(41, MotorType.kBrushless);
-    verticalMotor = new CANSparkMax(42, MotorType.kBrushless);
+    verticalMotor = new CANSparkMax(50, MotorType.kBrushless);
     shooterEncoder = new CANEncoder(shootingFrontMotor);
   }
   @Override
@@ -68,7 +68,7 @@ public class Shooter extends SubsystemBase {
     return distance;
   }*/
   public static double autoVertical(){
-    double Kp = 0.0075; // Proportional control constant
+    double Kp = 0.02; // Proportional control constant
     double y = ty.getDouble(0.0);
     double v = tv.getDouble(1);
     double headingError = -y;
