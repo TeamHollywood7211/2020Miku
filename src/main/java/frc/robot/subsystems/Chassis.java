@@ -7,6 +7,10 @@
 
 package frc.robot.subsystems;
 
+import edu.wpi.first.networktables.NetworkTable;
+import edu.wpi.first.networktables.NetworkTableEntry;
+import edu.wpi.first.networktables.NetworkTableInstance;
+import edu.wpi.first.wpilibj.BuiltInAccelerometer;
 import edu.wpi.first.wpilibj.SpeedControllerGroup;
 import edu.wpi.first.wpilibj2.command.SubsystemBase;
 import frc.robot.RobotContainer;
@@ -23,6 +27,8 @@ import com.revrobotics.CANSparkMaxLowLevel.MotorType;
 public class Chassis extends SubsystemBase {
   // Put methods for controlling this subsystem
   // here. Call these from Commands.
+  public static BuiltInAccelerometer accel;
+
   private static CANSparkMax leftFront;
   private static CANSparkMax leftMiddle;
   private static CANSparkMax leftBack;
@@ -35,9 +41,15 @@ public class Chassis extends SubsystemBase {
 
   public static DifferentialDrive diffDrive;
 
+  public static NetworkTable table = NetworkTableInstance.getDefault().getTable("limelight");
+  public static NetworkTableEntry tx = table.getEntry("tx");
+  public static NetworkTableEntry tv = table.getEntry("tv");
+
   public static double rampRate = 1.15;
 
   public Chassis() {
+    accel = new BuiltInAccelerometer();
+
     // Define the left side of the robot and group the motors together.
     leftFront = new CANSparkMax(1, MotorType.kBrushless);
     leftMiddle = new CANSparkMax(2, MotorType.kBrushless);
@@ -57,6 +69,8 @@ public class Chassis extends SubsystemBase {
 
     // Group the SpeedControllerGroups into one Differential Drive system.
     diffDrive = new DifferentialDrive(leftMotors, rightMotors);
+
+    
   }
 
   public static void DriveByJoystick() {
@@ -64,10 +78,14 @@ public class Chassis extends SubsystemBase {
     // Increase the values at a increasing rate.
     boolean squaredInputs = true;
 
-    // use the actual FRC provided method with easier access in the defined method.
-    driveArcade(returnLeftAxis(1), -returnRightAxis(4), squaredInputs);
-    // this.driveTank(returnLeftAxis(1), returnRightAxis(5), squaredInputs);
-
+    if(RobotContainer.operatorJoystick.getRawButton(1) == true){
+      driveTank(autoAim(), autoAim(), false);
+    }
+    else{
+      // use the actual FRC provided method with easier access in the defined method.
+      driveArcade(antiTip(returnLeftAxis(1)), -returnRightAxis(4), squaredInputs);
+      // this.driveTank(returnLeftAxis(1), returnRightAxis(5), squaredInputs);
+    }
     configureChassis(true, true);
   }
 
@@ -122,5 +140,57 @@ public class Chassis extends SubsystemBase {
     double rightStick = RobotContainer.driverJoystick.getRawAxis(rightAxis);
     return rightStick;
   }
+  static boolean highVelocity;
+  static int timer;
+  public static double antiTip(double moveSpeed){
 
-}
+    
+    if(leftEncoder.getVelocity() > 3500){
+      highVelocity = true;
+      timer = 0;
+    }
+    if(leftEncoder.getVelocity() < 0){
+      highVelocity = false;
+    }
+    if(highVelocity){
+      if(moveSpeed <= 0.3){
+        if(timer < 10){
+          moveSpeed = 0.5;
+          timer++;
+        }
+        if(timer > 10 && getRoll() <= 11){
+          highVelocity = false;
+        }
+      }
+    }
+    return moveSpeed;
+  }
+
+  public static double getRoll(){
+    double X = accel.getX();
+    double Y = accel.getY();
+    double Z = accel.getZ();
+    return Math.atan2(-X, Math.sqrt(Y*Y + Z*Z)) * 180/Math.PI;
+    }
+
+    public static double autoAim(){
+      double Kp = 0.1; // Proportional control constant
+      double x = tx.getDouble(0.0);
+      double v = tv.getDouble(1);
+      double headingError = -x;
+      double chassisAdjust = 0;
+
+      // If A is held down, run a PID loop to center the turret.
+      if(v == 1){
+        if (x > 0.5) {
+          chassisAdjust = Kp * headingError;
+        } 
+        else if (x < 0.5) {
+          chassisAdjust = Kp * headingError;
+        }
+      }
+      return chassisAdjust;
+    }
+  }
+
+

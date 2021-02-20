@@ -5,41 +5,41 @@
 /* the project.                                                               */
 /*----------------------------------------------------------------------------*/
 
-package frc.robot.commands;
+package frc.robot.commands.auton;
 
 import edu.wpi.first.wpilibj2.command.CommandBase;
-import frc.robot.RobotContainer;
-import frc.robot.subsystems.Shooter;
+import frc.robot.subsystems.Chassis;
 
-public class RunShooter extends CommandBase {
+public class DriveForwardStepTwo extends CommandBase {
   /**
-   * Creates a new RunShooter.
+   * Creates a new DriveForward.
    */
-  private boolean cellReady = true;
-
-  public RunShooter(Shooter shooter) {
+  private final double targetDistance = 74;
+  public DriveForwardStepTwo(Chassis chassis) {
     // Use addRequirements() here to declare subsystem dependencies.
-    addRequirements(shooter);
-
+    addRequirements(chassis);
   }
 
   // Called when the command is initially scheduled.
   @Override
   public void initialize() {
+    while(Chassis.rightEncoder.getPosition() < targetDistance){
+      Chassis.diffDrive.arcadeDrive(-0.35, 0);
+      }
+      Chassis.diffDrive.arcadeDrive(0, 0);
   }
 
   // Called every time the scheduler runs while the command is scheduled.
   @Override
   public void execute() {
-    //check the operator controller to see if we want to shoot it. If we do, fire.
-    if (RobotContainer.operatorJoystick.getRawAxis(3) >= 0.5 && cellReady == true){
-      Shooter.shootingFrontMotor.set(0.89);
-      Shooter.shootingBackMotor.set(-0.89);
-      }
-    else{
-      Shooter.shootingFrontMotor.set(0);
-      Shooter.shootingBackMotor.set(0);
+    /*if(Chassis.rightEncoder.getPosition() < target Distance){
+      Chassis.diffDrive.arcadeDrive(1, 0);
     }
+    else{
+      Chassis.diffDrive.arcadeDrive(0, 0);
+    }*/
+    System.out.println("Drive Encoder: " + Chassis.rightEncoder.getPosition());
+    
   }
 
   // Called once the command ends or is interrupted.
@@ -50,6 +50,9 @@ public class RunShooter extends CommandBase {
   // Returns true when the command should end.
   @Override
   public boolean isFinished() {
+    if(Chassis.rightEncoder.getPosition() >= targetDistance){
+      return true;
+    }
     return false;
   }
 }

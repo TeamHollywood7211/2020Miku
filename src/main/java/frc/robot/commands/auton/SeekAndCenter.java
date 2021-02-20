@@ -11,7 +11,7 @@ import edu.wpi.first.networktables.NetworkTableEntry;
 import edu.wpi.first.networktables.NetworkTableInstance;
 import edu.wpi.first.networktables.NetworkTable;
 import edu.wpi.first.wpilibj2.command.CommandBase;
-import frc.robot.subsystems.Turret;
+import frc.robot.subsystems.Chassis;
 
 public class SeekAndCenter extends CommandBase {
   /**
@@ -21,9 +21,13 @@ public class SeekAndCenter extends CommandBase {
   public static NetworkTable table = NetworkTableInstance.getDefault().getTable("limelight");
   public static NetworkTableEntry tx = table.getEntry("tx");
   public static NetworkTableEntry tv = table.getEntry("tv");
-  public SeekAndCenter(Turret turret) {
+
+  double x = tx.getDouble(0.0);
+  double v = tv.getDouble(0);
+
+  public SeekAndCenter(Chassis chassis) {
     // Use addRequirements() here to declare subsystem dependencies.
-    addRequirements(turret);
+    addRequirements(chassis);
   }
 
   // Called when the command is initially scheduled.
@@ -34,26 +38,31 @@ public class SeekAndCenter extends CommandBase {
   // Called every time the scheduler runs while the command is scheduled.
   @Override
   public void execute() {
-    double Kp = 0.1; // Proportional control constant
     double x = tx.getDouble(0.0);
+    double v = tv.getDouble(0);
+    double Kp = 0.1; // Proportional control constant
       double headingError = -x;
-      double turretAdjust = 0;
-      if (x > 0.5) {
-        turretAdjust = Kp * headingError;
-      } else if (x < 0.5) {
-        turretAdjust = Kp * headingError;
-      }
-      Turret.turretMotor.set(turretAdjust);
+      double adjust = 0;
+    if(v == 1){
+      if (x > 0.5 || x < 0.5) {
+        adjust = Kp * headingError;
+      } 
+      Chassis.driveTank(adjust, adjust, false);
     }
+  }
 
   // Called once the command ends or is interrupted.
   @Override
   public void end(boolean interrupted) {
+    Chassis.driveTank(0, 0, false);
   }
 
   // Returns true when the command should end.
   @Override
   public boolean isFinished() {
+    if((x > 0.45 || x < 55) || v == 0){
+      return true;
+    }
     return false;
   }
 

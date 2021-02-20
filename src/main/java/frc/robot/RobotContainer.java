@@ -31,18 +31,17 @@ public class RobotContainer {
   public static Harvester m_harvester = new Harvester();
   public static Conveyor m_conveyor = new Conveyor();
   public static Shooter m_shooter = new Shooter();
-  public static Turret m_turret = new Turret();
-  public static Climber m_climber = new Climber();
+  //public static Turret m_turret = new Turret();
 
   //The robot's commands
   public DriveChassis m_driveChassis;
 
-  public static TurnTurret m_turnTurret;
+  //public static TurnTurret m_turnTurret;
   public static RunHarvester m_runHarvester;
 
   public final static Joystick driverJoystick = new Joystick(0);
-  public final static POVButton upClimberButton = new POVButton(driverJoystick, 180);
-  public final static POVButton downClimberButton = new POVButton(driverJoystick, 0);
+  //public final static POVButton upClimberButton = new POVButton(driverJoystick, 180);
+  //public final static POVButton downClimberButton = new POVButton(driverJoystick, 0);
 
   public final static Joystick operatorJoystick = new Joystick(1);
   public final static JoystickButton harvesterArmButton = new JoystickButton(operatorJoystick, 8);

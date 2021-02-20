@@ -7,7 +7,6 @@
 
 package frc.robot;
 
-import frc.robot.Constants;
 import edu.wpi.first.wpilibj.smartdashboard.*;
 
 /**

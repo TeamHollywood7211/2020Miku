@@ -22,8 +22,8 @@ public class ConveyorAuton extends CommandBase {
   // Called when the command is initially scheduled.
   @Override
   public void initialize() {
-    Conveyor.frontConveyor.set(0.8);
-    Conveyor.backConveyor.set(0.7);
+    Conveyor.frontConveyor.set(0.9);
+    //Conveyor.backConveyor.set(0.8);
   }
   
 
@@ -37,6 +37,8 @@ public class ConveyorAuton extends CommandBase {
   // Called once the command ends or is interrupted.
   @Override
   public void end(boolean interrupted) {
+    Conveyor.frontConveyor.set(0);
+    //Conveyor.backConveyor.set(0);
   }
 
   // Returns true when the command should end.

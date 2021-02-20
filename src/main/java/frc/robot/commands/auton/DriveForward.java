@@ -11,6 +11,7 @@ import edu.wpi.first.wpilibj2.command.CommandBase;
 import frc.robot.subsystems.Chassis;
 
 public class DriveForward extends CommandBase {
+  double targetDistance = 37;
   /**
    * Creates a new DriveForward.
    */
@@ -25,7 +26,7 @@ public class DriveForward extends CommandBase {
     //Each 14 tick = 1 inch
     Chassis.rightEncoder.setPosition(0);
 
-    while(Chassis.rightEncoder.getPosition() < 687.549354157){
+    while(Chassis.rightEncoder.getPosition() < targetDistance){
       Chassis.diffDrive.arcadeDrive(-0.5, 0);
       }
     Chassis.diffDrive.arcadeDrive(0, 0);
@@ -53,7 +54,7 @@ public class DriveForward extends CommandBase {
   // Returns true when the command should end.
   @Override
   public boolean isFinished() {
-    if(Chassis.rightEncoder.getPosition() >= 687.549354157){
+    if(Chassis.rightEncoder.getPosition() >= targetDistance){
       return true;
     }
     return false;

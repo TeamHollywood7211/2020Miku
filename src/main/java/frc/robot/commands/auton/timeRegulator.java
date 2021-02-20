@@ -5,51 +5,44 @@
 /* the project.                                                               */
 /*----------------------------------------------------------------------------*/
 
-package frc.robot.commands;
+package frc.robot.commands.auton;
 
 import edu.wpi.first.wpilibj2.command.CommandBase;
-import frc.robot.RobotContainer;
-import frc.robot.subsystems.Shooter;
+import edu.wpi.first.wpilibj.Timer;
 
-public class RunShooter extends CommandBase {
+public class timeRegulator extends CommandBase {
   /**
-   * Creates a new RunShooter.
+   * Creates a new timeRegulator.
    */
-  private boolean cellReady = true;
-
-  public RunShooter(Shooter shooter) {
+  public Timer time;
+  public timeRegulator() {
     // Use addRequirements() here to declare subsystem dependencies.
-    addRequirements(shooter);
-
+    time = new Timer();
   }
 
   // Called when the command is initially scheduled.
   @Override
   public void initialize() {
+    time.start();
   }
 
   // Called every time the scheduler runs while the command is scheduled.
   @Override
   public void execute() {
-    //check the operator controller to see if we want to shoot it. If we do, fire.
-    if (RobotContainer.operatorJoystick.getRawAxis(3) >= 0.5 && cellReady == true){
-      Shooter.shootingFrontMotor.set(0.89);
-      Shooter.shootingBackMotor.set(-0.89);
-      }
-    else{
-      Shooter.shootingFrontMotor.set(0);
-      Shooter.shootingBackMotor.set(0);
-    }
   }
 
   // Called once the command ends or is interrupted.
   @Override
   public void end(boolean interrupted) {
+    time.reset();
   }
 
   // Returns true when the command should end.
   @Override
   public boolean isFinished() {
+    if(time.get() >= 3.5){
+      return true;
+    }
     return false;
   }
 }

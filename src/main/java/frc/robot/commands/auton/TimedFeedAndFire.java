@@ -7,19 +7,20 @@
 
 package frc.robot.commands.auton;
 
-import edu.wpi.first.wpilibj2.command.ParallelCommandGroup;
+import edu.wpi.first.wpilibj2.command.ParallelDeadlineGroup;
 import frc.robot.RobotContainer;
 
 // NOTE:  Consider using this command inline, rather than writing a subclass.  For more
 // information, see:
 // https://docs.wpilib.org/en/latest/docs/software/commandbased/convenience-features.html
-public class FeedAndFire extends ParallelCommandGroup {
+public class TimedFeedAndFire extends ParallelDeadlineGroup {
   /**
-   * Creates a new FeedAndFire.
+   * Creates a new TimedFeedAndFire.
    */
-  public FeedAndFire() {
-    // Add your commands in the super() call, e.g.
-    // super(new FooCommand(), new BarCommand());
-    super(new ShooterAuton(RobotContainer.m_shooter), new ConveyorAuton(RobotContainer.m_conveyor));
+  public TimedFeedAndFire() {
+    // Add your commands in the super() call.  Add the deadline first.
+    super(
+      new timeRegulator(), new ConveyorAuton(RobotContainer.m_conveyor),
+      new ShooterAuton(RobotContainer.m_shooter));
   }
 }

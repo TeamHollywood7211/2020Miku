@@ -7,19 +7,28 @@
 
 package frc.robot.commands.auton;
 
-import edu.wpi.first.wpilibj2.command.ParallelCommandGroup;
-import frc.robot.RobotContainer;
+import edu.wpi.first.wpilibj.trajectory.TrapezoidProfile;
+import edu.wpi.first.wpilibj2.command.TrapezoidProfileCommand;
 
 // NOTE:  Consider using this command inline, rather than writing a subclass.  For more
 // information, see:
 // https://docs.wpilib.org/en/latest/docs/software/commandbased/convenience-features.html
-public class FeedAndFire extends ParallelCommandGroup {
+public class DriveDistanceProfiled extends TrapezoidProfileCommand {
   /**
-   * Creates a new FeedAndFire.
+   * Creates a new DriveDistanceProfiled.
    */
-  public FeedAndFire() {
-    // Add your commands in the super() call, e.g.
-    // super(new FooCommand(), new BarCommand());
-    super(new ShooterAuton(RobotContainer.m_shooter), new ConveyorAuton(RobotContainer.m_conveyor));
+  public DriveDistanceProfiled() {
+    super(
+        // The motion profile to be executed
+        new TrapezoidProfile(
+            // The motion profile constraints
+            new TrapezoidProfile.Constraints(0, 0),
+            // Goal state
+            new TrapezoidProfile.State(),
+            // Initial state
+            new TrapezoidProfile.State()),
+        state -> {
+          // Use current trajectory state here
+        });
   }
 }

@@ -13,13 +13,13 @@ import frc.robot.RobotContainer;
 // NOTE:  Consider using this command inline, rather than writing a subclass.  For more
 // information, see:
 // https://docs.wpilib.org/en/latest/docs/software/commandbased/convenience-features.html
-public class FeedAndFire extends ParallelCommandGroup {
+public class DriveAndGrab extends ParallelCommandGroup {
   /**
-   * Creates a new FeedAndFire.
+   * Creates a new DriveAndGrab.
    */
-  public FeedAndFire() {
+  public DriveAndGrab() {
     // Add your commands in the super() call, e.g.
-    // super(new FooCommand(), new BarCommand());
-    super(new ShooterAuton(RobotContainer.m_shooter), new ConveyorAuton(RobotContainer.m_conveyor));
+    // super(new FooCommand(), new BarCommand());super();
+    super(new DriveForward(RobotContainer.m_chassis), new HarvesterAuton(RobotContainer.m_harvester));
   }
 }
